@@ -1,6 +1,8 @@
 package bgu.spl.mics.application.passiveObjects;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Passive data-object representing information about a mission.
@@ -9,94 +11,95 @@ import java.util.List;
  * You may add ONLY private fields and methods to this class.
  */
 public class MissionInfo {
+    private String missionName;
+    private List<String> serialAgentsNumbers = new CopyOnWriteArrayList<String>();
+    private String gadget;
+    private int timeIssued;
+    private int timeExpired;
+    private int duration;
 
     /**
      * Sets the name of the mission.
      */
     public void setMissionName(String missionName) {
-        // TODO Implement this
+        this.missionName = missionName;
     }
 
-	/**
+    /**
      * Retrieves the name of the mission.
      */
-	public String getMissionName() {
-		// TODO Implement this
-		return null;
-	}
+    public String getMissionName() {
+        return missionName;
+    }
 
     /**
      * Sets the serial agent number.
      */
     public void setSerialAgentsNumbers(List<String> serialAgentsNumbers) {
-        // TODO Implement this
+		serialAgentsNumbers.clear();
+		this.serialAgentsNumbers.addAll(serialAgentsNumbers);
     }
 
-	/**
+    /**
      * Retrieves the serial agent number.
      */
-	public List<String> getSerialAgentsNumbers() {
-		// TODO Implement this
-		return null;
-	}
+    public List<String> getSerialAgentsNumbers() {
+        return serialAgentsNumbers;
+    }
 
     /**
      * Sets the gadget name.
      */
     public void setGadget(String gadget) {
-        // TODO Implement this
+        this.gadget = gadget;
     }
 
-	/**
+    /**
      * Retrieves the gadget name.
      */
-	public String getGadget() {
-		// TODO Implement this
-		return null;
-	}
+    public String getGadget() {
+        return gadget;
+    }
 
     /**
      * Sets the time the mission was issued in milliseconds.
      */
     public void setTimeIssued(int timeIssued) {
-        // TODO Implement this
+        this.timeIssued = timeIssued;
     }
 
-	/**
+    /**
      * Retrieves the time the mission was issued in milliseconds.
      */
-	public int getTimeIssued() {
-		// TODO Implement this
-		return 0;
-	}
+    public int getTimeIssued() {
+        return timeIssued;
+    }
 
     /**
      * Sets the time that if it that time passed the mission should be aborted.
      */
     public void setTimeExpired(int timeExpired) {
-        // TODO Implement this
+        this.timeExpired = timeExpired;
     }
 
-	/**
+    /**
      * Retrieves the time that if it that time passed the mission should be aborted.
      */
-	public int getTimeExpired() {
-		// TODO Implement this
-		return 0;
-	}
+    public int getTimeExpired() {
+        return timeExpired;
+    }
 
     /**
      * Sets the duration of the mission in time-ticks.
      */
     public void setDuration(int duration) {
-        // TODO Implement this
+        this.duration = duration;
     }
 
-	/**
-	 * Retrieves the duration of the mission in time-ticks.
-	 */
-	public int getDuration() {
-		// TODO Implement this
-		return 0;
-	}
+    /**
+     * Retrieves the duration of the mission in time-ticks.
+     */
+    public int getDuration() {
+        return duration;
+    }
 }
