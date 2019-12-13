@@ -36,7 +36,7 @@ public class MissionInfo {
      * Sets the serial agent number.
      */
     public void setSerialAgentsNumbers(List<String> serialAgentsNumbers) {
-		serialAgentsNumbers.clear();
+        this.serialAgentsNumbers.clear();
 		this.serialAgentsNumbers.addAll(serialAgentsNumbers);
     }
 

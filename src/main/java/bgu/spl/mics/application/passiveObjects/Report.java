@@ -1,6 +1,7 @@
 package bgu.spl.mics.application.passiveObjects;
 
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Passive data-object representing a delivery vehicle of the store.
@@ -12,8 +13,8 @@ public class Report {
 	private String missionName;
 	private int M;
 	private int Moneypenny;
-	private List<String> AgentsSerialNumbersNumber;
-	private List<String> agentsNames;
+	private List<String> AgentsSerialNumbersNumber = new CopyOnWriteArrayList<String>();
+	private List<String> agentsNames = new CopyOnWriteArrayList<String>();
 	private String gadgetName;
 	private int qTime;
 	private int timeIssued;
@@ -75,8 +76,7 @@ public class Report {
 	 * Sets the serial numbers of the agents.
 	 */
 	public void setAgentsSerialNumbersNumber(List<String> agentsSerialNumbersNumber) {
-		if(!agentsSerialNumbersNumber.isEmpty() )
-			agentsSerialNumbersNumber.clear();
+		this.AgentsSerialNumbersNumber.clear();
 		this.AgentsSerialNumbersNumber.addAll(agentsSerialNumbersNumber);
 	}
 	/**
@@ -92,8 +92,7 @@ public class Report {
 	 * Sets the agents names.
 	 */
 	public void setAgentsNames(List<String> agentsNames) {
-		if(!this.agentsNames.isEmpty())
-			this.agentsNames.clear();
+		this.agentsNames.clear();
 		this.agentsNames.addAll(agentsNames);
 	}
 
