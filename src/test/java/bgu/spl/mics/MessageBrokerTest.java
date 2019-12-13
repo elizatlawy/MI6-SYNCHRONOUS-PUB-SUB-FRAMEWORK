@@ -12,7 +12,7 @@ public class MessageBrokerTest {
     }
 
     @Test
-        void subscribeEvent(){
+        void subscribeEventTest(){
 
 
     }
