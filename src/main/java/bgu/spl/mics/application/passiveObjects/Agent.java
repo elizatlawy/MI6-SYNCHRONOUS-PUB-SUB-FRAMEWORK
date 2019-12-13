@@ -53,21 +53,24 @@ public class Agent {
      * <p>
      * @return if the agent is available.
      */
-	public boolean isAvailable() {
+	public synchronized boolean isAvailable() {
 		return isAvailable;
 	}
 
 	/**
 	 * Acquires an agent.
 	 */
-	public void acquire(){
+	public synchronized void acquire(){
+		if (!isAvailable)
+			throw new RuntimeException(" Cannot acquire an agent that is already acquired for some other mission");
 		isAvailable = false;
 	}
 
 	/**
 	 * Releases an agent.
 	 */
-	public void release(){
+	public synchronized void release(){
 		isAvailable = true;
+		notifyAll();
 	}
 }

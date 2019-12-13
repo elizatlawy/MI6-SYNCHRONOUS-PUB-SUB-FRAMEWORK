@@ -1,6 +1,8 @@
 package bgu.spl.mics.application.passiveObjects;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Passive data-object representing a information about an agent in MI6.
@@ -11,13 +13,17 @@ import java.util.Map;
 public class Squad {
 
 	private Map<String, Agent> agents;
-
+	private static class SquadHolder {
+		private static Squad instance = new Squad();
+	}
+	private Squad(){
+		agents = new ConcurrentHashMap<>();
+	}
 	/**
 	 * Retrieves the single instance of this class.
 	 */
 	public static Squad getInstance() {
-		//TODO: Implement this
-		return null;
+		return SquadHolder.instance;
 	}
 
 	/**
@@ -27,14 +33,16 @@ public class Squad {
 	 * 						of the squad.
 	 */
 	public void load (Agent[] agents) {
-		// TODO Implement this
+		for (Agent agent : agents)
+			this.agents.putIfAbsent(agent.getSerialNumber(), agent);
 	}
 
 	/**
 	 * Releases agents.
 	 */
 	public void releaseAgents(List<String> serials){
-		// TODO Implement this
+		for (String serialNumber : serials)
+			agents.get(serialNumber).release();
 	}
 
 	/**
@@ -42,17 +50,54 @@ public class Squad {
 	 * @param time   milliseconds to sleep
 	 */
 	public void sendAgents(List<String> serials, int time){
-		// TODO Implement this
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {}
+		for (String serialNumber : serials)
+			agents.get(serialNumber).release();
 	}
 
 	/**
 	 * acquires an agent, i.e. holds the agent until the caller is done with it
-	 * @param serials   the serial numbers of the agents
+	 * @param serials the serial numbers of the agents
 	 * @return ‘false’ if an agent of serialNumber ‘serial’ is missing, and ‘true’ otherwise
 	 */
 	public boolean getAgents(List<String> serials){
-		// TODO Implement this
-		return false;
+		//check if the agents exist in agents
+		for ( String serialNumber : serials) {
+			if (!agents.containsValue(serialNumber))
+				return false;
+		}
+		/* acquire the agents to the mission, and if some agent is acquired for other mission
+		the function will wait until the agent becomes available */
+		boolean problem;
+		LinkedList<String> acquired = new LinkedList<>();
+		Agent BusyAgent = null;
+		do {
+			problem = false;
+			for (String serialNumber : serials) {
+				synchronized (agents.get(serialNumber)) {
+					if (agents.get(serialNumber).isAvailable()) {
+						agents.get(serialNumber).acquire();
+						acquired.add(serialNumber);
+					} else {
+						problem = true;
+						BusyAgent = agents.get(serialNumber);
+						releaseAgents(acquired);
+						break; // break the for loop
+					}
+				}
+			}
+
+			if(problem){
+				try {
+					synchronized (BusyAgent) {
+						wait();
+					}
+				}catch (InterruptedException e){}
+			}
+		} while (problem);
+		return true;
 	}
 
     /**
@@ -61,8 +106,10 @@ public class Squad {
      * @return a list of the names of the agents with the specified serials.
      */
     public List<String> getAgentsNames(List<String> serials){
-        // TODO Implement this
-	    return null;
+		List<String> AgentListName = new LinkedList<>();
+        for (String serialNumber : serials)
+        	AgentListName.add(agents.get(serialNumber).getName());
+        return AgentListName;
     }
 
 }

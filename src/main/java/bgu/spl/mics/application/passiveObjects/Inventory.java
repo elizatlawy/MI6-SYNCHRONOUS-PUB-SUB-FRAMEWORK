@@ -1,6 +1,8 @@
 package bgu.spl.mics.application.passiveObjects;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  *  That's where Q holds his gadget (e.g. an explosive pen was used in GoldenEye, a geiger counter in Dr. No, etc).
@@ -11,24 +13,31 @@ import java.util.List;
  * You can add ONLY private fields and methods to this class as you see fit.
  */
 public class Inventory {
+
 	private List<String> gadgets;
+	public static class InventoryHolder {
+		private static Inventory instance = new Inventory();
+	}
+	private Inventory(){
+		gadgets = new CopyOnWriteArrayList<>();
+	}
+
 	/**
      * Retrieves the single instance of this class.
      */
 	public static Inventory getInstance() {
-		//TODO: Implement this
-		return null;
+		return InventoryHolder.instance;
 	}
 
 	/**
      * Initializes the inventory. This method adds all the items given to the gadget
      * inventory.
      * <p>
-     * @param inventory 	Data structure containing all data necessary for initialization
-     * 						of the inventory.
+     * @param inventory Data structure containing all data necessary for initialization
+     * of the inventory.
      */
 	public void load (String[] inventory) {
-		//TODO: Implement this
+		this.gadgets.addAll(Arrays.asList(inventory));
 	}
 	
 	/**
@@ -38,8 +47,7 @@ public class Inventory {
      * @return 	‘false’ if the gadget is missing, and ‘true’ otherwise
      */
 	public boolean getItem(String gadget){
-		//TODO: Implement this
-		return true;
+		return gadgets.contains(gadget);
 	}
 
 	/**
