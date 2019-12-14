@@ -2,19 +2,30 @@ package bgu.spl.mics;
 
 import bgu.spl.mics.application.passiveObjects.Squad;
 
+import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * The {@link MessageBrokerImpl class is the implementation of the MessageBroker interface.
  * Write your implementation here!
  * Only private fields and methods can be added to this class.
  */
 public class MessageBrokerImpl implements MessageBroker {
+	private ConcurrentHashMap<Publisher, BlockingQueue<Message>> publishers;
+	private ConcurrentHashMap<Class<? extends Message>, List<Subscriber>> Subscribers;
+	private ConcurrentHashMap<Event,Future> events;
+
+
+	private static class MessageBrokerHolder {
+		private static MessageBroker instance = new MessageBrokerImpl();
+	}
 
 	/**
 	 * Retrieves the single instance of this class.
 	 */
 	public static MessageBroker getInstance() {
-		//TODO: Implement this
-		return null;
+		return MessageBrokerHolder.instance;
 	}
 
 	@Override

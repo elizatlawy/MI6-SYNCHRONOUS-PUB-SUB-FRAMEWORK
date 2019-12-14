@@ -7,5 +7,6 @@ package bgu.spl.mics.application;
 public class MI6Runner {
     public static void main(String[] args) {
         // TODO Implement this
+        System.out.println("hey");
     }
 }
