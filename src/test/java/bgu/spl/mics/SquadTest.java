@@ -3,13 +3,9 @@ package bgu.spl.mics;
 import bgu.spl.mics.application.passiveObjects.Agent;
 import bgu.spl.mics.application.passiveObjects.Inventory;
 import bgu.spl.mics.application.passiveObjects.Squad;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,16 +19,7 @@ SquadTest {
 
     @BeforeEach
     public void setUp(){
-        squad = Squad.getInstance();
-    }
-    @AfterEach
-    public void tearDown() throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        Class SquadClass = Class.forName("bgu.spl.mics.application.passiveObjects.Squad");
-        Field instanceFiled = SquadClass.getDeclaredField("instance");
-        instanceFiled.setAccessible(true);
-        Constructor InvConstructor = SquadClass.getDeclaredConstructors()[0];
-        InvConstructor.setAccessible(true);
-        instanceFiled.set(instanceFiled, InvConstructor.newInstance());
+        squad = new Squad();
     }
 
     @Test
