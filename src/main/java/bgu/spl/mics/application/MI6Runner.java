@@ -7,6 +7,7 @@ import bgu.spl.mics.application.passiveObjects.Inventory;
 import bgu.spl.mics.application.passiveObjects.MissionInfo;
 import bgu.spl.mics.application.passiveObjects.Squad;
 import bgu.spl.mics.application.publishers.Intelligence;
+import bgu.spl.mics.application.publishers.TimeService;
 import bgu.spl.mics.application.subscribers.M;
 import bgu.spl.mics.application.subscribers.Moneypenny;
 import com.google.gson.Gson;
@@ -61,11 +62,11 @@ public class MI6Runner {
     }
 
     private static void insertToService(JsonObject obj, List<Publisher> Publishers, List<Subscriber> subscribers) {
-        for (int i = 1; i <= obj.services.M; i++)
+        for (int i = 0; i < obj.services.M; i++)
             subscribers.add(new M());
-        for (int i = 1; i <= obj.services.Moneypenny; i++)
+        for (int i = 0; i < obj.services.Moneypenny; i++)
             subscribers.add(new Moneypenny());
-        for (int i = 1; i <= obj.services.intelligence.length; i++) {
+        for (int i = 0; i < obj.services.intelligence.length; i++) {
             Intelligence intel = new Intelligence();
             LinkedList<MissionInfo> MissionsToLoad = new LinkedList<>();
             for (JsonObject.JsonServices.JsonIntelligence.JsonMissions currMission : obj.services.intelligence[i].missions) {
@@ -75,11 +76,10 @@ public class MI6Runner {
             intel.load(MissionsToLoad);
             Publishers.add(intel);
         }
-        //TODO insert time to timeService
-
+        int duration = obj.services.time;
+        TimeService timeService = TimeService.getInstance();
+        timeService.setDuration(duration);
 
     }
-
-
 }
 
