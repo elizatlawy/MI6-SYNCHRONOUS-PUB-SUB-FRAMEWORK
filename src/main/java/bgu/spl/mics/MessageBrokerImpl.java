@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Only private fields and methods can be added to this class.
  */
 public class MessageBrokerImpl implements MessageBroker {
-	private ConcurrentHashMap<Publisher, BlockingQueue<Message>> publishers;
+	private ConcurrentHashMap<RunnableSubPub, BlockingQueue<Message>> SubPubs;
 	private ConcurrentHashMap<Class<? extends Message>, List<Subscriber>> Subscribers;
 	private ConcurrentHashMap<Event,Future> events;
 
