@@ -12,5 +12,16 @@ public class MissionReceivedEvent implements Event<String> {
         this.agentNumber = agentNumber;
         this.gadget = gadget;
     }
+    public String getMissionName() {
+        return missionName;
+    }
+
+    public String getAgentNumber() {
+        return agentNumber;
+    }
+
+    public String getGadget() {
+        return gadget;
+    }
 }
 

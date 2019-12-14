@@ -19,7 +19,6 @@ public class Intelligence extends Publisher {
 
 	public Intelligence() {
 		super("Intelligence");
-		// TODO Implement this
 	}
 
 	@Override

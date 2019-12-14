@@ -2,20 +2,23 @@ package bgu.spl.mics.application.messages;
 
 import bgu.spl.mics.Event;
 
-public class AgentsAvailableEvent implements Event<String> {
-    private String agentNumber;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+public class AgentsAvailableEvent implements Event<Boolean> {
+    private List<String> serialAgentsNumbers = new CopyOnWriteArrayList<String>();
     /**
      * Constructor
      */
-    public AgentsAvailableEvent(String agentNumber) {
-        this.agentNumber = agentNumber;
+    public AgentsAvailableEvent(List<String> serialAgentsNumbers) {
+        this.serialAgentsNumbers.addAll(serialAgentsNumbers);
     }
 
     /**
      *
      * @return name of the agent to be checked
      */
-    public String getAgentNumber() {
-        return agentNumber;
+    public List<String> getSerialAgentsNumbersNumber() {
+        return serialAgentsNumbers;
     }
 }

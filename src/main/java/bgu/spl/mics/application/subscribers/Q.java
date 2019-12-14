@@ -24,5 +24,4 @@ public class Q extends Subscriber {
 		subscribeEvent(GadgetAvailableEvent.class, (ev) -> this.complete(ev,inventory.getItem(ev.getGadgetName())));
 		
 	}
-
 }

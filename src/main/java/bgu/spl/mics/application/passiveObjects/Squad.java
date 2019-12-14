@@ -51,6 +51,7 @@ public class Squad {
 	 */
 	public void sendAgents(List<String> serials, int time){
 		// TODO check if need to acquire agents first
+		//TODO check if it is milliseconds or timeticks
 		try {
 			Thread.sleep(time);
 		} catch (InterruptedException e) {}

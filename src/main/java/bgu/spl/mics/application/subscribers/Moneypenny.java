@@ -12,7 +12,7 @@ import bgu.spl.mics.Subscriber;
 public class Moneypenny extends Subscriber {
 
 	public Moneypenny() {
-		super("Change_This_Name");
+		super("Moneypenny");
 		// TODO Implement this
 	}
 
