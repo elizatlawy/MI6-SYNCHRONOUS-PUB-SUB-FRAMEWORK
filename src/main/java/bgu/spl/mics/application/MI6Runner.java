@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,10 +32,11 @@ public class MI6Runner {
             // read the json to the fields
             LinkedList<Subscriber> subscribers = new LinkedList<>();
             LinkedList<Publisher> Publishers = new LinkedList<>();
+
             insertToInventory(obj);
             insertToSquad(obj);
             insertToService(obj, Publishers, subscribers);
-            Intelligence intel = new Intelligence();
+
             System.out.println("done");
         } catch (IOException e) {
         }

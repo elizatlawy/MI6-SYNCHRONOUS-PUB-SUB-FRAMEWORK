@@ -24,7 +24,7 @@ public class MessageBrokerTest {
         void subscribeEvent() throws InterruptedException {
         messageBroker.register(subscriberM);
         messageBroker.subscribeEvent(MissionReceivedEvent.class,subscriberM);
-        MissionReceivedEvent newMission = new MissionReceivedEvent();
+        MissionReceivedEvent newMission = new MissionReceivedEvent("testMission", "007", "pistol" );
         messageBroker.sendEvent(newMission);
         Message NewMessage = messageBroker.awaitMessage(subscriberM);
         assertTrue(NewMessage != null);
