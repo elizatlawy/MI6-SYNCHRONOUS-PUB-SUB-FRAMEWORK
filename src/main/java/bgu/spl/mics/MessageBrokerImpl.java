@@ -77,26 +77,29 @@ public class MessageBrokerImpl implements MessageBroker {
         boolean problem;
         do{
             problem = false;
-            synchronized (mapOfSubscribers.get(e.getClass())) { // lock the queue of this event class
-                ConcurrentLinkedQueue<Subscriber> subscribersOfCurrEvent = mapOfSubscribers.get(e.getClass());
-                if (subscribersOfCurrEvent != null && !subscribersOfCurrEvent.isEmpty()) {
-                    currSubscriber = subscribersOfCurrEvent.poll(); // return the head of the list & removes it
-                    subscribersOfCurrEvent.add(currSubscriber); // add the currSubscriber to the end of the list (round-robin)
-                }
-            } // end of sync
-            if (currSubscriber != null) {
-                synchronized (currSubscriber) {
-                    BlockingQueue<Message> todoQ = mapOfToDoMessages.get(currSubscriber);
-                    if (todoQ != null) {
-                        todoQ.add(e);
-                    } else { // the currSubscriber unregistered himself
-                        problem = true;
+            if(mapOfSubscribers.containsKey(e.getClass())){
+                synchronized (mapOfSubscribers.get(e.getClass())) { // lock the queue of this event class
+                    ConcurrentLinkedQueue<Subscriber> subscribersOfCurrEvent = mapOfSubscribers.get(e.getClass());
+                    if (subscribersOfCurrEvent != null && !subscribersOfCurrEvent.isEmpty()) {
+                        currSubscriber = subscribersOfCurrEvent.poll(); // return the head of the list & removes it
+                        subscribersOfCurrEvent.add(currSubscriber); // add the currSubscriber to the end of the list (round-robin)
+                    }
+                } // end of sync
+                if (currSubscriber != null) {
+                    synchronized (currSubscriber) {
+                        BlockingQueue<Message> todoQ = mapOfToDoMessages.get(currSubscriber);
+                        if (todoQ != null) {
+                            todoQ.add(e);
+                        } else { // the currSubscriber unregistered himself
+                            problem = true;
+                        }
                     }
                 }
+                else {
+                    future.resolve(null);
+                }
             }
-            else {
-                future.resolve(null);
-            }
+
         }
         while(problem);
         return future;
