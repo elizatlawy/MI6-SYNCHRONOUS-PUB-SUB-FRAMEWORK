@@ -109,7 +109,6 @@ public class MessageBrokerImpl implements MessageBroker {
 
     @Override
     public void unregister(Subscriber m) {
-        // TODO check if need to resolve or pass the messages to others
         LinkedBlockingDeque<Message> toDeleteQ = mapOfToDoMessages.get(m);
         if(toDeleteQ != null && !toDeleteQ.isEmpty()){
             for(Message currMessage : toDeleteQ)
