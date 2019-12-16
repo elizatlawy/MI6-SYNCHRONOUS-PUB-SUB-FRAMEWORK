@@ -80,7 +80,7 @@ SquadTest {
     }
 
     @Test
-    void getAgents() {
+    void getAgents() throws InterruptedException {
         Agent agent1 = new Agent("Eli", "007", true);
         Agent agent2 = new Agent("Bond", "006", true);
         Agent agent3 = new Agent("Nadav", "005", true);

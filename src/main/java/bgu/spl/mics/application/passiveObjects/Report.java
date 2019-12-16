@@ -1,5 +1,6 @@
 package bgu.spl.mics.application.passiveObjects;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -13,8 +14,8 @@ public class Report {
 	private String missionName;
 	private int M;
 	private int Moneypenny;
-	private List<String> AgentsSerialNumbersNumber = new CopyOnWriteArrayList<String>();
-	private List<String> agentsNames = new CopyOnWriteArrayList<String>();
+	private List<String> AgentsSerialNumbersNumber = new LinkedList<>();
+	private List<String> agentsNames = new LinkedList<>();
 	private String gadgetName;
 	private int qTime;
 	private int timeIssued;

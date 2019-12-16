@@ -2,7 +2,6 @@ package bgu.spl.mics.application.passiveObjects;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Passive data-object representing information about a mission.
@@ -12,7 +11,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class MissionInfo {
     private String missionName;
-    private List<String> serialAgentsNumbers = new CopyOnWriteArrayList<String>();
+    private List<String> serialAgentsNumbers;
     private String gadget;
     private int timeIssued;
     private int timeExpired;
@@ -23,7 +22,7 @@ public class MissionInfo {
      */
     public MissionInfo(String missionName, List<String> serialAgentsNumbers, String gadget, int timeIssued, int timeExpired, int duration) {
         this.missionName = missionName;
-        this.serialAgentsNumbers = serialAgentsNumbers;
+        this.serialAgentsNumbers = new LinkedList<>(serialAgentsNumbers);
         this.gadget = gadget;
         this.timeIssued = timeIssued;
         this.timeExpired = timeExpired;

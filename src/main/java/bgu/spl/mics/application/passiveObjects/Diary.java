@@ -1,5 +1,6 @@
 package bgu.spl.mics.application.passiveObjects;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -19,7 +20,7 @@ public class Diary {
 	private int total;
 
 	private Diary() {
-		reports = new CopyOnWriteArrayList<Report>();
+		reports = new LinkedList<>();
 	}
 	/**
 	 * Retrieves the single instance of this class.
@@ -37,7 +38,9 @@ public class Diary {
 	 * @param reportToAdd - the report to add
 	 */
 	public void addReport(Report reportToAdd){
-		reports.add(reportToAdd);
+		synchronized (reports){
+			reports.add(reportToAdd);
+		}
 	}
 
 	/**

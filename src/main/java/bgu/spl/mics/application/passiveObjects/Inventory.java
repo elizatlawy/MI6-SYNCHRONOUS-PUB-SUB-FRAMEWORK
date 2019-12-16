@@ -1,6 +1,7 @@
 package bgu.spl.mics.application.passiveObjects;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -19,7 +20,7 @@ public class Inventory {
 		private static Inventory instance = new Inventory();
 	}
 	private Inventory(){
-		gadgets = new CopyOnWriteArrayList<>();
+		gadgets = new LinkedList<>();
 	}
 
 	/**
