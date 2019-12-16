@@ -48,11 +48,11 @@ public class Squad {
 
 	/**
 	 * simulates executing a mission by calling sleep.
-	 * @param time   milliseconds to sleep
+	 * @param time   time-ticks to sleep
 	 */
 	public void sendAgents(List<String> serials, int time){
 		try {
-			Thread.sleep(time);
+			Thread.sleep(time*100);
 		} catch (InterruptedException e) {}
 		for (String serialNumber : serials)
 			agents.get(serialNumber).release();
