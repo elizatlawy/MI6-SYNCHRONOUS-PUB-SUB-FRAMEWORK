@@ -32,13 +32,9 @@ public class MI6Runner {
             JsonObject obj = new Gson().fromJson(str, JsonObject.class);
             // read the json to the fields
             LinkedList<Subscriber> subscribers = new LinkedList<>();
-            LinkedList<Publisher> Publishers = new LinkedList<>();
-
             insertToInventory(obj);
             insertToSquad(obj);
-            insertToService(obj, Publishers, subscribers);
-
-            System.out.println("done");
+            insertToService(obj,subscribers);
         } catch (IOException e) {
         }
     }
@@ -61,7 +57,7 @@ public class MI6Runner {
         Squad.getInstance().load(AgentsToInsert.toArray(new Agent[AgentsToInsert.size()]));
     }
 
-    private static void insertToService(JsonObject obj, List<Publisher> Publishers, List<Subscriber> subscribers) {
+    private static void insertToService(JsonObject obj, List<Subscriber> subscribers) {
         for (int i = 0; i < obj.services.M; i++)
             subscribers.add(new M());
         for (int i = 0; i < obj.services.Moneypenny; i++)
@@ -74,7 +70,7 @@ public class MI6Runner {
                 MissionsToLoad.add(mission);
             }
             intel.load(MissionsToLoad);
-            Publishers.add(intel);
+            subscribers.add(intel);
         }
         int duration = obj.services.time;
         TimeService timeService = TimeService.getInstance();

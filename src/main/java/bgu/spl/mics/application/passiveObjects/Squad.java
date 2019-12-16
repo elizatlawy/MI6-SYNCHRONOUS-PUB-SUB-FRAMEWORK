@@ -1,4 +1,5 @@
 package bgu.spl.mics.application.passiveObjects;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,7 @@ public class Squad {
 		private static Squad instance = new Squad();
 	}
 	private Squad(){
-		agents = new ConcurrentHashMap<>();
+		agents = new HashMap<>();
 	}
 	/**
 	 * Retrieves the single instance of this class.
@@ -50,7 +51,6 @@ public class Squad {
 	 * @param time   milliseconds to sleep
 	 */
 	public void sendAgents(List<String> serials, int time){
-		// TODO check if need to acquire agents first
 		try {
 			Thread.sleep(time);
 		} catch (InterruptedException e) {}
@@ -64,7 +64,6 @@ public class Squad {
 	 * @return ‘false’ if an agent of serialNumber ‘serial’ is missing, and ‘true’ otherwise
 	 */
 	public boolean getAgents(List<String> serials) throws InterruptedException {
-		serials.sort(String::compareTo);
 		//check if the agents exist in agents
 		for ( String serialNumber : serials) {
 			if (!agents.containsValue(serialNumber))
@@ -73,18 +72,25 @@ public class Squad {
 		/* acquire the agents to the mission, and if some agent is acquired for other mission
 		the function will wait until the agent becomes available */
 		boolean problem;
-		for (String serialNumber : serials) {
-			Agent agent = agents.get(serialNumber);
-			if (agent.isAvailable()) {
-				agent.acquire();
-			} else {
-				synchronized (agent)
-				{
-					wait();
-				}
+		LinkedList<String> acquired = new LinkedList<>();
+		do {
+			problem = false;
+			Agent currAgent;
+			for (String serialNumber : serials) {
+				currAgent = agents.get(serialNumber);
+				synchronized (currAgent) {
+					if (currAgent.isAvailable()) {
+						currAgent.acquire();
+						acquired.add(serialNumber);
+					} else {
+						problem = true;
+						releaseAgents(acquired);
+						wait(); // waiting for currAgent to become available
+						break; // break the for loop
+					}
+				} // end of sync
 			}
-		}
-
+		} while (problem);
 		return true;
 	}
 
