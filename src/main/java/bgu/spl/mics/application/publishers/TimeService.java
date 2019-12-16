@@ -19,7 +19,6 @@ public class TimeService extends Publisher {
 		private static TimeService instance = new TimeService();
 	}
 
-	private SimplePublisher simplePublisher;
 	private int speed;
 	private int duration;
 	private int tick;
@@ -27,7 +26,6 @@ public class TimeService extends Publisher {
 	private TimeService() {
 		super("TimeService");
 		this.speed = 100;
-		simplePublisher = new SimplePublisher();
 		tick = 1;
 	}
 
@@ -41,18 +39,15 @@ public class TimeService extends Publisher {
 
 	@Override
 	protected void initialize() {
-		/*simplePublisher.subscribeBroadcast(TerminateBroadcast.class, terminate->{
-			terminate();
-		});*/
 		while (tick <= duration){
-			simplePublisher.sendBroadcast(new TickBroadcast(tick, speed, duration));
+			getSimplePublisher().sendBroadcast(new TickBroadcast(tick, speed, duration));
 			try {
 			Thread.sleep(speed);
 			tick++;
 			} catch (InterruptedException e) {}
 		}
 
-		simplePublisher.sendBroadcast(new TerminateBroadcast());
+		getSimplePublisher().sendBroadcast(new TerminateBroadcast());
 
 	}
 

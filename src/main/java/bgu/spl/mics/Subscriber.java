@@ -1,5 +1,7 @@
 package bgu.spl.mics;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * The Subscriber is an abstract class that any subscriber in the system
  * must extend. The abstract Subscriber class is responsible to get and
@@ -17,6 +19,7 @@ package bgu.spl.mics;
  */
 public abstract class Subscriber extends RunnableSubPub {
     private boolean terminated = false;
+    private ConcurrentHashMap<Class <? extends Message>, Callback> callBacks;
 
     /**
      * @param name the Subscriber name (used mainly for debugging purposes -
@@ -47,8 +50,11 @@ public abstract class Subscriber extends RunnableSubPub {
      *                 {@code type} are taken from this Subscriber message
      *                 queue.
      */
-    protected final <T, E extends Event<T>> void subscribeEvent(Class<E> type, Callback<E> callback) {
-        //TODO: implement this.
+    protected final <T, E extends Event<T>> void subscribeEvent(Class<E> type, Callback<E> callback){
+        if(!callBacks.containsKey(type)){
+            callBacks.put(type, callback);
+            getSimplePublisher().messageBroker.subscribeEvent(type, this);
+        }
     }
 
     /**
@@ -72,8 +78,12 @@ public abstract class Subscriber extends RunnableSubPub {
      *                 queue.
      */
     protected final <B extends Broadcast> void subscribeBroadcast(Class<B> type, Callback<B> callback) {
-        //TODO: implement this.
+        if(!callBacks.containsKey(type)){
+            callBacks.put(type, callback);
+            getSimplePublisher().messageBroker.subscribeBroadcast(type, this);
+        }
     }
+
 
     /**
      * Completes the received request {@code e} with the result {@code result}
@@ -105,7 +115,9 @@ public abstract class Subscriber extends RunnableSubPub {
     public final void run() {
         initialize();
         while (!terminated) {
-            System.out.println("NOT IMPLEMENTED!!!"); //TODO: you should delete this line :)
+            try {
+                Message currMessage = getSimplePublisher().messageBroker.awaitMessage(this);
+            } catch (InterruptedException e) {}
         }
     }
 }
