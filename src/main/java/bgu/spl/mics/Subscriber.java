@@ -51,9 +51,11 @@ public abstract class Subscriber extends RunnableSubPub {
      *                 queue.
      */
     protected final <T, E extends Event<T>> void subscribeEvent(Class<E> type, Callback<E> callback){
-        if(!callBacks.containsKey(type)){
-            callBacks.put(type, callback);
-            getSimplePublisher().messageBroker.subscribeEvent(type, this);
+        if (type != null && callback != null){
+            if(!callBacks.containsKey(type)){
+                callBacks.put(type, callback);
+                getSimplePublisher().messageBroker.subscribeEvent(type, this);
+            }
         }
     }
 
@@ -78,9 +80,11 @@ public abstract class Subscriber extends RunnableSubPub {
      *                 queue.
      */
     protected final <B extends Broadcast> void subscribeBroadcast(Class<B> type, Callback<B> callback) {
-        if(!callBacks.containsKey(type)){
-            callBacks.put(type, callback);
-            getSimplePublisher().messageBroker.subscribeBroadcast(type, this);
+        if (type != null && callback != null){
+            if(!callBacks.containsKey(type)){
+                callBacks.put(type, callback);
+                getSimplePublisher().messageBroker.subscribeBroadcast(type, this);
+            }
         }
     }
 
@@ -96,7 +100,7 @@ public abstract class Subscriber extends RunnableSubPub {
      *               {@code e}.
      */
     protected final <T> void complete(Event<T> e, T result) {
-        //TODO: implement this.
+        getSimplePublisher().messageBroker.complete(e,result);
     }
 
     /**
@@ -116,8 +120,13 @@ public abstract class Subscriber extends RunnableSubPub {
         initialize();
         while (!terminated) {
             try {
-                Message currMessage = getSimplePublisher().messageBroker.awaitMessage(this);
+                Message toDoMessage = getSimplePublisher().messageBroker.awaitMessage(this);
+                if(callBacks.containsKey(toDoMessage.getClass())){
+                    Callback callback = callBacks.get(toDoMessage.getClass());
+                    callback.call(toDoMessage);
+                }
             } catch (InterruptedException e) {}
         }
+        getSimplePublisher().messageBroker.unregister(this);
     }
-}
+} // end of class
