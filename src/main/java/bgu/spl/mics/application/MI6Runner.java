@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class MI6Runner {
     public static void main(String[] args) {
-
+        // json parse
         try {
             String str = new String(Files.readAllBytes(Paths.get(args[0])));
             JsonObject obj = new Gson().fromJson(str, JsonObject.class);
@@ -36,7 +36,10 @@ public class MI6Runner {
             insertToSquad(obj);
             insertToService(obj,subscribers);
         } catch (IOException e) {
+            throw new RuntimeException("illegal json file");
         }
+        // run
+        // TODO: Terminate TimeService at the and
     }
 
     private static void insertToInventory(JsonObject obj) {

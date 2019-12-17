@@ -38,22 +38,19 @@ public class TimeService extends Publisher {
 	}
 
 	@Override
-	protected void initialize() {
+	protected void initialize() {}
+
+	@Override
+	public void run() {
 		while (tick <= duration){
-			getSimplePublisher().sendBroadcast(new TickBroadcast(tick, speed, duration));
+			getSimplePublisher().sendBroadcast(new TickBroadcast(tick, duration));
 			try {
-			Thread.sleep(speed);
-			tick++;
+				Thread.sleep(speed);
+				tick++;
 			} catch (InterruptedException e) {}
 		}
 
 		getSimplePublisher().sendBroadcast(new TerminateBroadcast());
-
-	}
-
-	@Override
-	public void run() {
-		initialize();
 	}
 
 }

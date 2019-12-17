@@ -1,5 +1,8 @@
 package bgu.spl.mics;
 
+import bgu.spl.mics.application.messages.TerminateBroadcast;
+import bgu.spl.mics.application.messages.TickBroadcast;
+
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -119,6 +122,7 @@ public abstract class Subscriber extends RunnableSubPub {
     public final void run() {
         initialize();
         getSimplePublisher().messageBroker.register(this);
+        subscribeBroadcast(TerminateBroadcast.class, (bro) -> terminate());
         while (!terminated) {
             try {
                 Message toDoMessage = getSimplePublisher().messageBroker.awaitMessage(this);
@@ -126,7 +130,9 @@ public abstract class Subscriber extends RunnableSubPub {
                     Callback callback = callBacks.get(toDoMessage.getClass());
                     callback.call(toDoMessage);
                 }
-            } catch (InterruptedException e) {}
+            } catch (InterruptedException e) {
+                terminate();
+            }
         }
         getSimplePublisher().messageBroker.unregister(this);
     }
