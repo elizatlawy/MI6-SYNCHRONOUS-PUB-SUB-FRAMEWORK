@@ -61,7 +61,7 @@ public class MessageBrokerImpl implements MessageBroker {
         if (mapOfSubscribers.containsKey(b.getClass())) {
             synchronized (mapOfSubscribers.get(b.getClass())) {
                 ConcurrentLinkedQueue<Subscriber> subscribersOfCurrBroadcast = mapOfSubscribers.get(b.getClass());
-                if(subscribersOfCurrBroadcast != null && !subscribersOfCurrBroadcast.isEmpty()){
+                if (subscribersOfCurrBroadcast != null && !subscribersOfCurrBroadcast.isEmpty()) {
                     for (RunnableSubPub currSubscriber : subscribersOfCurrBroadcast)
                         mapOfToDoMessages.get(currSubscriber).add(b);
                 }
