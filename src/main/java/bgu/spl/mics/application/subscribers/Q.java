@@ -21,8 +21,6 @@ public class Q extends Subscriber {
 
 	@Override
 	protected void initialize() {
-		// TODO Implement this
 		subscribeEvent(GadgetAvailableEvent.class, (ev) -> this.complete(ev,inventory.getItem(ev.getGadgetName())));
-		
 	}
 }
