@@ -99,6 +99,10 @@ public class MessageBrokerImpl implements MessageBroker {
                     future.resolve(null);
                 }
             }
+//            else{
+//                System.out.println("No Subscriber has registered to handle ExampleEvent events! The event cannot be\n" +
+//                        "processed");
+//            }
 
         }
         while(problem);
