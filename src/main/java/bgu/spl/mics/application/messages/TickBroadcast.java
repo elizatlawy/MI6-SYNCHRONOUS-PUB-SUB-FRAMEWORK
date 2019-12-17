@@ -5,7 +5,6 @@ import bgu.spl.mics.Broadcast;
 public class TickBroadcast implements Broadcast {
 
     private int tick;
-    private final int speed = 100;
     private int duration;
 
 
@@ -15,6 +14,14 @@ public class TickBroadcast implements Broadcast {
     public TickBroadcast(int tick, int duration) {
         this.tick = tick;
         this.duration = duration;
+    }
+
+    public int getTick() {
+        return tick;
+    }
+
+    public int getDuration() {
+        return duration;
     }
 }
 

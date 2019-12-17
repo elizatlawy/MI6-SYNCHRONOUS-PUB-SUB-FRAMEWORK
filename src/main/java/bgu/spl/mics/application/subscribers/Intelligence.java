@@ -16,6 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class Intelligence extends Subscriber {
 	private List<MissionInfo> missions = new CopyOnWriteArrayList<>();
+	private int currTick;
 
 	public Intelligence() {
 		super("Intelligence");
@@ -23,7 +24,13 @@ public class Intelligence extends Subscriber {
 
 	@Override
 	protected void initialize() {
-		subscribeEvent(TickBroadcast.class, (tickBroadcast) -> {} );
+		subscribeEvent(TickBroadcast.class, tickBroadcast-> currTick = tickBroadcast.g );
+
+//		for (MissionInfo currMission : missions){
+//			if(currMission.getTimeIssued() == tickBroadcast.getTick()){
+//
+//			}
+
 	}
 
 	public void load(List<MissionInfo> missionsToLoad){
