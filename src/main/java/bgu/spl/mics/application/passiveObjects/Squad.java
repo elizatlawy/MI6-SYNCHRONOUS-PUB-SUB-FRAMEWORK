@@ -63,7 +63,7 @@ public class Squad {
 	 * @param serials the serial numbers of the agents
 	 * @return ‘false’ if an agent of serialNumber ‘serial’ is missing, and ‘true’ otherwise
 	 */
-	public boolean getAgents(List<String> serials) throws InterruptedException {
+	public boolean getAgents(List<String> serials){
 		//check if the agents exist in agents
 		for ( String serialNumber : serials) {
 			if (!agents.containsValue(serialNumber))
@@ -83,10 +83,14 @@ public class Squad {
 						currAgent.acquire();
 						acquired.add(serialNumber);
 					} else {
-						problem = true;
-						releaseAgents(acquired);
-						wait(); // waiting for currAgent to become available
-						break; // break the for loop
+						try{
+							problem = true;
+							releaseAgents(acquired);
+							wait(); // waiting for currAgent to become available
+							break; // break the for loop
+						}
+						catch (InterruptedException e){}
+
 					}
 				} // end of sync
 			}

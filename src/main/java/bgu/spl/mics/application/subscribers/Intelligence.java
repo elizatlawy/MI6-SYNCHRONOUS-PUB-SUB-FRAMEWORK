@@ -1,7 +1,7 @@
 package bgu.spl.mics.application.subscribers;
 
-import bgu.spl.mics.Publisher;
 import bgu.spl.mics.Subscriber;
+import bgu.spl.mics.application.messages.TickBroadcast;
 import bgu.spl.mics.application.passiveObjects.MissionInfo;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class Intelligence extends Subscriber {
 
 	@Override
 	protected void initialize() {
-		// TODO Implement this
+		subscribeEvent(TickBroadcast.class, (tickBroadcast) -> {} );
 	}
 
 	public void load(List<MissionInfo> missionsToLoad){
