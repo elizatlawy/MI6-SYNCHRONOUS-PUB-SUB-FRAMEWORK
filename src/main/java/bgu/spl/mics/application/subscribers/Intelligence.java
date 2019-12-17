@@ -1,6 +1,7 @@
 package bgu.spl.mics.application.subscribers;
 
 import bgu.spl.mics.Subscriber;
+import bgu.spl.mics.application.messages.MissionReceivedEvent;
 import bgu.spl.mics.application.messages.TickBroadcast;
 import bgu.spl.mics.application.passiveObjects.MissionInfo;
 
@@ -16,21 +17,20 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class Intelligence extends Subscriber {
 	private List<MissionInfo> missions = new CopyOnWriteArrayList<>();
-	private int currTick;
-
 	public Intelligence() {
 		super("Intelligence");
 	}
 
 	@Override
 	protected void initialize() {
-		subscribeEvent(TickBroadcast.class, tickBroadcast-> currTick = tickBroadcast.g );
-
-//		for (MissionInfo currMission : missions){
-//			if(currMission.getTimeIssued() == tickBroadcast.getTick()){
-//
-//			}
-
+		subscribeBroadcast(TickBroadcast.class, (tickBroadcast)-> {
+			for (MissionInfo currMission : missions) {
+				if (currMission.getTimeIssued() == tickBroadcast.getTick()) {
+					getSimplePublisher().sendEvent(new MissionReceivedEvent(currMission.getMissionName(),
+							currMission.getSerialAgentsNumbers(),currMission.getGadget()));
+				}
+			}
+			}); // end of lambda
 	}
 
 	public void load(List<MissionInfo> missionsToLoad){
