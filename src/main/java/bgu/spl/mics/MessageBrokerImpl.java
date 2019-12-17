@@ -71,7 +71,7 @@ public class MessageBrokerImpl implements MessageBroker {
 
     @Override
     public <T> Future<T> sendEvent(Event<T> e) {
-        Future future = null;
+        Future future;
         Subscriber currSubscriber = null;
         boolean problem;
         do{
@@ -116,12 +116,21 @@ public class MessageBrokerImpl implements MessageBroker {
     @Override
     public void unregister(Subscriber m) {
         LinkedBlockingDeque<Message> toDeleteQ = mapOfToDoMessages.get(m);
+        // resolve all m toDoMessages to null
         if(toDeleteQ != null && !toDeleteQ.isEmpty()){
             for(Message currMessage : toDeleteQ)
                 if( currMessage  instanceof Event)
                     complete((Event)currMessage, null);
         }
+        // remove the queue of m from the toDoMessages
         mapOfToDoMessages.remove(m);
+        // unsubscribe m for all the events & broadcasts he was subscribed to
+        for(Class<? extends Message> currMessage : mapOfSubscribers.keySet()){
+            ConcurrentLinkedQueue<Subscriber> currMessageQ = mapOfSubscribers.get(currMessage);
+            synchronized (currMessageQ){
+                currMessageQ.remove(m);
+            }
+        }
     }
 
     @Override
