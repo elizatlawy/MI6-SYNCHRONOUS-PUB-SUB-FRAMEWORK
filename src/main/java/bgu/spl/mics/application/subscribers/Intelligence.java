@@ -16,9 +16,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * You MAY change constructor signatures and even add new public constructors.
  */
 public class Intelligence extends Subscriber {
+	private int id;
 	private List<MissionInfo> missions = new CopyOnWriteArrayList<>();
-	public Intelligence() {
-		super("Intelligence");
+
+	public Intelligence( int id) {
+		super("Intelligence No: " + id);
+		this.id = id;
 	}
 
 	@Override
@@ -26,8 +29,7 @@ public class Intelligence extends Subscriber {
 		subscribeBroadcast(TickBroadcast.class, (tickBroadcast)-> {
 			for (MissionInfo currMission : missions) {
 				if (currMission.getTimeIssued() == tickBroadcast.getTick()) {
-					getSimplePublisher().sendEvent(new MissionReceivedEvent(currMission.getMissionName(),
-							currMission.getSerialAgentsNumbers(),currMission.getGadget()));
+					getSimplePublisher().sendEvent(new MissionReceivedEvent(currMission));
 				}
 			}
 			}); // end of lambda
