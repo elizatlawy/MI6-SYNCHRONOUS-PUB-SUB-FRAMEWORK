@@ -61,12 +61,13 @@ public class MI6Runner {
     }
 
     private static void insertToService(JsonObject obj, List<Subscriber> subscribers) {
+
         for (int i = 0; i < obj.services.M; i++)
-            subscribers.add(new M());
+            subscribers.add(new M((i+1)));
         for (int i = 0; i < obj.services.Moneypenny; i++)
-            subscribers.add(new Moneypenny());
+            subscribers.add(new Moneypenny(i+1));
         for (int i = 0; i < obj.services.intelligence.length; i++) {
-            Intelligence intel = new Intelligence();
+            Intelligence intel = new Intelligence(i+1);
             LinkedList<MissionInfo> MissionsToLoad = new LinkedList<>();
             for (JsonObject.JsonServices.JsonIntelligence.JsonMissions currMission : obj.services.intelligence[i].missions) {
                 MissionInfo mission = new MissionInfo(currMission.missionName, Arrays.asList(currMission.serialAgentsNumbers), currMission.gadget, currMission.timeIssued, currMission.timeExpired, currMission.duration);
