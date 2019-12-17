@@ -71,13 +71,14 @@ public class MessageBrokerImpl implements MessageBroker {
 
     @Override
     public <T> Future<T> sendEvent(Event<T> e) {
-        Future future = new Future();
-        mapOfevents.put(e, future);
+        Future future = null;
         Subscriber currSubscriber = null;
         boolean problem;
         do{
             problem = false;
             if(mapOfSubscribers.containsKey(e.getClass())){
+                future = new Future();
+                mapOfevents.put(e, future);
                 synchronized (mapOfSubscribers.get(e.getClass())) { // lock the queue of this event class
                     ConcurrentLinkedQueue<Subscriber> subscribersOfCurrEvent = mapOfSubscribers.get(e.getClass());
                     if (subscribersOfCurrEvent != null && !subscribersOfCurrEvent.isEmpty()) {
@@ -96,14 +97,12 @@ public class MessageBrokerImpl implements MessageBroker {
                     }
                 }
                 else {
-                    future.resolve(null);
+                    future = null;
                 }
             }
-//            else{
-//                System.out.println("No Subscriber has registered to handle ExampleEvent events! The event cannot be\n" +
-//                        "processed");
-//            }
-
+            else{
+                future = null;
+            }
         }
         while(problem);
         return future;
@@ -127,8 +126,7 @@ public class MessageBrokerImpl implements MessageBroker {
 
     @Override
     public Message awaitMessage(Subscriber m) throws InterruptedException {
-        // TODO Auto-generated method stub
         LinkedBlockingDeque<Message> toPullFromQ = mapOfToDoMessages.get(m);
-        return toPullFromQ.poll(); // Poll is a blocking method that will wait until Q is not empty
+        return toPullFromQ.take(); // take() is a blocking method that will wait until Q is not empty
     }
 }
