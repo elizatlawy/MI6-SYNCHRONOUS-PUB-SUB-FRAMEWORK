@@ -16,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Inventory {
 
 	private List<String> gadgets;
-	public static class InventoryHolder {
+	private static class InventoryHolder {
 		private static Inventory instance = new Inventory();
 	}
 	private Inventory(){

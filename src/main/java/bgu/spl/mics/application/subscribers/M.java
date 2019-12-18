@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * M handles ReadyEvent - fills a report and sends agents to mission.
@@ -21,27 +22,24 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class M extends Subscriber {
 	private int id;
-	private Diary diary;
+	private Diary diary = Diary.getInstance();;
 	private MissionInfo currMission;
 	private int currTick;
-
-
-
 	public M(int id) {
 		super("M No: " + id );
 		this.id = id;
-		diary = Diary.getInstance();
-
 	}
 
 	@Override
 	protected void initialize() {
 		subscribeBroadcast(TickBroadcast.class, (brod) -> currTick = brod.getTick());
 		subscribeEvent(MissionReceivedEvent.class, (ev)-> { currMission = ev.getMission();
+			System.out.println("M No:" + id + " is executing MissionReceivedEvent of: " + currMission.getMissionName());
 		int qtime = -1;
 		Integer moneypennyID = null;
 		Boolean isGadgetAvailable  = null;
 		Future<Integer> agentsAvailable = getSimplePublisher().sendEvent(new AgentsAvailableEvent(currMission.getSerialAgentsNumbers()));
+
 		Future<Boolean> gadgetAvailable = getSimplePublisher().sendEvent(new GadgetAvailableEvent(currMission.getGadget()));
 		// TODO check if possible to send negative time
 		if(currTick <= currMission.getTimeExpired()){

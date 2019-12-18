@@ -1,10 +1,7 @@
 package bgu.spl.mics.application;
 
 import bgu.spl.mics.Subscriber;
-import bgu.spl.mics.application.passiveObjects.Agent;
-import bgu.spl.mics.application.passiveObjects.Inventory;
-import bgu.spl.mics.application.passiveObjects.MissionInfo;
-import bgu.spl.mics.application.passiveObjects.Squad;
+import bgu.spl.mics.application.passiveObjects.*;
 import bgu.spl.mics.application.subscribers.Intelligence;
 import bgu.spl.mics.application.publishers.TimeService;
 import bgu.spl.mics.application.subscribers.M;
@@ -12,6 +9,7 @@ import bgu.spl.mics.application.subscribers.Moneypenny;
 import bgu.spl.mics.application.subscribers.Q;
 import com.google.gson.Gson;
 
+import java.io.DataInput;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -42,13 +40,10 @@ public class MI6Runner {
             timeService.setDuration(duration);
             // run
             executeThreads(subscribers, timeService);
+
         } catch (IOException e) {
             throw new RuntimeException("illegal json file");
         }
-
-
-
-        // TODO: Terminate TimeService at the and
     }
 
     private static void executeThreads ( List<Subscriber> subscribers, TimeService timeService ){
@@ -56,7 +51,12 @@ public class MI6Runner {
         //initialize all subscribers before the timeService
         for( Subscriber currSubscriber : subscribers)
             executor.execute(currSubscriber);
+
         executor.execute(timeService);
+
+
+        //shut down the executor service now
+        executor.shutdown();
 
 
     }
@@ -80,7 +80,6 @@ public class MI6Runner {
     }
 
     private static void insertSubscribers(JsonObject obj, List<Subscriber> subscribers) {
-
         for (int i = 0; i < obj.services.M; i++)
             subscribers.add(new M((i+1)));
         for (int i = 0; i < obj.services.Moneypenny; i++)

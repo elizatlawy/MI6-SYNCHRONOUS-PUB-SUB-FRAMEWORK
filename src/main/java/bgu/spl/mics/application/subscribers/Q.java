@@ -21,6 +21,9 @@ public class Q extends Subscriber {
 
 	@Override
 	protected void initialize() {
-		subscribeEvent(GadgetAvailableEvent.class, (ev) -> this.complete(ev,inventory.getItem(ev.getGadgetName())));
+		subscribeEvent(GadgetAvailableEvent.class, (ev) -> {
+			System.out.println("Q is executing GadgetAvailableEvent of: "  + ev.getGadgetName() );
+			this.complete(ev,inventory.getItem(ev.getGadgetName()));});
+
 	}
 }
