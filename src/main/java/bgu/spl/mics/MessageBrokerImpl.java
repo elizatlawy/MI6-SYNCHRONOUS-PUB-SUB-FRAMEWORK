@@ -43,11 +43,13 @@ public class MessageBrokerImpl implements MessageBroker {
     }
 
     private void subscribe(Class<? extends Message> type, Subscriber m) {
-        synchronized (type) {
-            mapOfSubscribers.putIfAbsent(type, new ConcurrentLinkedQueue<>());
-            ConcurrentLinkedQueue<Subscriber> toAddQ = mapOfSubscribers.get(type);
-            if (!toAddQ.contains(m))
-                toAddQ.add(m);
+        if(type != null && m != null){
+            synchronized (type) {
+                mapOfSubscribers.putIfAbsent(type, new ConcurrentLinkedQueue<>());
+                ConcurrentLinkedQueue<Subscriber> toAddQ = mapOfSubscribers.get(type);
+                if (!toAddQ.contains(m))
+                    toAddQ.add(m);
+            }
         }
     }
 
@@ -64,11 +66,11 @@ public class MessageBrokerImpl implements MessageBroker {
             synchronized (mapOfSubscribers.get(b.getClass())) {
                 ConcurrentLinkedQueue<Subscriber> subscribersOfCurrBroadcast = mapOfSubscribers.get(b.getClass());
                 if(subscribersOfCurrBroadcast != null && !subscribersOfCurrBroadcast.isEmpty()){
-                    for (RunnableSubPub currSubscriber : subscribersOfCurrBroadcast)
+                    for (Subscriber currSubscriber : subscribersOfCurrBroadcast)
                         if(b instanceof TerminateBroadcast){
                            mapOfToDoMessages.get (currSubscriber).addFirst(b);
                         }
-                        else
+                        else if (currSubscriber != null)
                             mapOfToDoMessages.get(currSubscriber).add(b);
                 }
             }
@@ -116,25 +118,28 @@ public class MessageBrokerImpl implements MessageBroker {
 
     @Override
     public void register(Subscriber m) {
-        mapOfToDoMessages.putIfAbsent(m, new LinkedBlockingDeque<>());
+        if( m != null)
+            mapOfToDoMessages.putIfAbsent(m, new LinkedBlockingDeque<>());
     }
 
     @Override
     public void unregister(Subscriber m) {
-        LinkedBlockingDeque<Message> toDeleteQ = mapOfToDoMessages.get(m);
-        // resolve all m toDoMessages to null
-        if(toDeleteQ != null && !toDeleteQ.isEmpty()){
-            for(Message currMessage : toDeleteQ)
-                if( currMessage  instanceof Event)
-                    complete((Event)currMessage, null);
-        }
-        // remove the queue of m from the toDoMessages
-        mapOfToDoMessages.remove(m);
-        // unsubscribe m for all the events & broadcasts he was subscribed to
-        for(Class<? extends Message> currMessage : mapOfSubscribers.keySet()){
-            ConcurrentLinkedQueue<Subscriber> currMessageQ = mapOfSubscribers.get(currMessage);
-            synchronized (currMessageQ){
-                currMessageQ.remove(m);
+        if( m != null){
+            LinkedBlockingDeque<Message> toDeleteQ = mapOfToDoMessages.get(m);
+            // resolve all m toDoMessages to null
+            if(toDeleteQ != null && !toDeleteQ.isEmpty()){
+                for(Message currMessage : toDeleteQ)
+                    if( currMessage  instanceof Event)
+                        complete((Event)currMessage, null);
+            }
+            // remove the queue of m from the toDoMessages
+            mapOfToDoMessages.remove(m);
+            // unsubscribe m for all the events & broadcasts he was subscribed to
+            for(Class<? extends Message> currMessage : mapOfSubscribers.keySet()){
+                ConcurrentLinkedQueue<Subscriber> currMessageQ = mapOfSubscribers.get(currMessage);
+                synchronized (currMessageQ){
+                    currMessageQ.remove(m);
+                }
             }
         }
     }

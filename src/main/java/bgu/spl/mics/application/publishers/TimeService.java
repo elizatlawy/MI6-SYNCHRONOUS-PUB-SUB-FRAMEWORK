@@ -8,7 +8,7 @@ import bgu.spl.mics.application.messages.TickBroadcast;
 /**
  * TimeService is the global system timer There is only one instance of this Publisher.
  * It keeps track of the amount of ticks passed since initialization and notifies
- * all other subscribers about the current time tick using {@link Tick Broadcast}.
+ * all other subscribers about the current time tick using {@link TickBroadcast}.
  * This class may not hold references for objects which it is not responsible for.
  * 
  * You can add private fields and public methods to this class.
@@ -39,22 +39,20 @@ public class TimeService extends Publisher {
 
 	@Override
 	protected void initialize() {
-		while (tick <= duration){
-			getSimplePublisher().sendBroadcast(new TickBroadcast(tick, duration));
-			System.out.println("TimeService currTick is: " + tick);
-			try {
-			Thread.sleep(speed);
-			tick++;
-			} catch (InterruptedException e) {}
-		}
-		getSimplePublisher().sendBroadcast(new TerminateBroadcast());
 
 	}
 
 	@Override
 	public void run() {
-		initialize();
+		while (tick <= duration){
+			getSimplePublisher().sendBroadcast(new TickBroadcast(tick, duration));
+			System.out.println(tick);
+			try {
+				Thread.sleep(speed);
+				tick++;
+			} catch (InterruptedException e) {}
+		}
+		getSimplePublisher().sendBroadcast(new TerminateBroadcast());
 	}
-
 }
 

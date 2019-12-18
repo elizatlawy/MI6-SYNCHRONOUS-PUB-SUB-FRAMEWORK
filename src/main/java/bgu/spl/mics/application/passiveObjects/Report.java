@@ -25,6 +25,7 @@ public class Report {
 		this.timeCreated = timeCreated;
 	}
 
+
 	/**
      * Retrieves the mission name.
      */
@@ -156,5 +157,20 @@ public class Report {
 	 */
 	public void setTimeCreated(int timeCreated) {
 		this.timeCreated = timeCreated;
+	}
+
+	@Override
+	public String toString() {
+		return "Report{" +
+				"missionName='" + missionName + '\'' +
+				", M=" + M +
+				", Moneypenny=" + Moneypenny +
+				", AgentsSerialNumbersNumber=" + AgentsSerialNumbersNumber +
+				", agentsNames=" + agentsNames +
+				", gadgetName='" + gadgetName + '\'' +
+				", qTime=" + qTime +
+				", timeIssued=" + timeIssued +
+				", timeCreated=" + timeCreated +
+				'}' + '\n';
 	}
 }

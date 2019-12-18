@@ -70,4 +70,12 @@ public class Diary {
 	public void increaseTotal() {
 		total.compareAndSet(total.intValue(),total.intValue()+1);
 	}
+
+	@Override
+	public String toString() {
+		return "Diary{" +
+				"reports= " + reports.toString() + '\n' +
+				", total= " + total +
+				'}';
+	}
 }

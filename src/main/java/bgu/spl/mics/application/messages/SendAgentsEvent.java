@@ -2,19 +2,20 @@ package bgu.spl.mics.application.messages;
 
 import bgu.spl.mics.Event;
 
+import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class SendAgentsEvent implements Event<Boolean> {
-    private CopyOnWriteArrayList serialAgentsNumbers = new CopyOnWriteArrayList();
+    private LinkedList<String> serialAgentsNumbers;
     private int duration;
 
-    public SendAgentsEvent(CopyOnWriteArrayList serialAgentsNumbers, int duration) {
-        this.serialAgentsNumbers = serialAgentsNumbers;
+    public SendAgentsEvent(List<String> serialAgentsNumbers, int duration) {
+        this.serialAgentsNumbers = new LinkedList<>();
+        this.serialAgentsNumbers.addAll(serialAgentsNumbers);
         this.duration = duration;
     }
 
-    public CopyOnWriteArrayList getSerialAgentsNumbers() {
+    public LinkedList<String> getSerialAgentsNumbers() {
         return serialAgentsNumbers;
     }
     public int getDuration() {

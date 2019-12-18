@@ -3,6 +3,7 @@ package bgu.spl.mics.application.subscribers;
 import bgu.spl.mics.Subscriber;
 import bgu.spl.mics.application.messages.GadgetAvailableEvent;
 import bgu.spl.mics.application.messages.TerminateBroadcast;
+import bgu.spl.mics.application.messages.TickBroadcast;
 import bgu.spl.mics.application.passiveObjects.Inventory;
 
 /**
@@ -13,6 +14,7 @@ import bgu.spl.mics.application.passiveObjects.Inventory;
  */
 public class Q extends Subscriber {
 	private Inventory inventory;
+	//int currTick;
 
 	public Q() {
 		super("Q");
@@ -21,9 +23,12 @@ public class Q extends Subscriber {
 
 	@Override
 	protected void initialize() {
+		//subscribeBroadcast(TickBroadcast.class, (brod) -> currTick = brod.getTick());
 		subscribeEvent(GadgetAvailableEvent.class, (ev) -> {
-			System.out.println("Q is executing GadgetAvailableEvent of: "  + ev.getGadgetName() );
-			this.complete(ev,inventory.getItem(ev.getGadgetName()));});
-
+			System.out.println("Q is STARTING executing GadgetAvailableEvent of: "  + ev.getGadgetName() );
+			boolean answer = inventory.getItem(ev.getGadgetName());
+			this.complete(ev,answer);
+			System.out.println("Q ANSWER for GadgetAvailableEvent of: "  + ev.getGadgetName() + " is: " + answer);
+			});
 	}
 }

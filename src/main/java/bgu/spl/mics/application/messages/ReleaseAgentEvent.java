@@ -6,7 +6,6 @@ import java.util.List;
 
 public class ReleaseAgentEvent implements Event<Boolean> {
     private List<String> AgentsSerialNumbersNumber;
-
     public ReleaseAgentEvent(List<String> agentsSerialNumbersNumber) {
         AgentsSerialNumbersNumber = agentsSerialNumbersNumber;
     }
