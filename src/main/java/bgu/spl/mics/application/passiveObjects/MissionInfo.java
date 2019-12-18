@@ -113,4 +113,5 @@ public class MissionInfo {
     public int getDuration() {
         return duration;
     }
+
 }

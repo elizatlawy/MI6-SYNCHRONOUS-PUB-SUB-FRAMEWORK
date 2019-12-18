@@ -13,14 +13,16 @@ import java.util.concurrent.atomic.AtomicInteger;
  * You can add ONLY private fields and methods to this class as you see fit.
  */
 public class Diary {
-	private static class DiaryHolder{
-		private static Diary instance = new Diary();
-	}
 	private List<Report> reports;
 	private AtomicInteger total;
 
+	private static class DiaryHolder{
+		private static Diary instance = new Diary();
+	}
+
 	private Diary() {
 		reports = new LinkedList<>();
+		total = new AtomicInteger();
 		total.set(0);
 	}
 	/**
@@ -67,5 +69,13 @@ public class Diary {
 
 	public void increaseTotal() {
 		total.compareAndSet(total.intValue(),total.intValue()+1);
+	}
+
+	@Override
+	public String toString() {
+		return "Diary{" +
+				"reports= " + reports.toString() + '\n' +
+				", total= " + total +
+				'}';
 	}
 }
