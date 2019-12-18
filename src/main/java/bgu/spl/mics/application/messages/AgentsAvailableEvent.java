@@ -5,7 +5,7 @@ import bgu.spl.mics.Event;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class AgentsAvailableEvent implements Event<Boolean> {
+public class AgentsAvailableEvent implements Event<Integer> {
     private List<String> serialAgentsNumbers = new CopyOnWriteArrayList<String>();
     /**
      * Constructor

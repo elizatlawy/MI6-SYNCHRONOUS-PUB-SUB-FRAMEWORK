@@ -21,6 +21,9 @@ public class Report {
 	private int timeIssued;
 	private int timeCreated;
 
+	public Report(int timeCreated) {
+		this.timeCreated = timeCreated;
+	}
 
 	/**
      * Retrieves the mission name.
