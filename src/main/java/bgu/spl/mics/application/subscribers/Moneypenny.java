@@ -1,8 +1,7 @@
 package bgu.spl.mics.application.subscribers;
 
 import bgu.spl.mics.Subscriber;
-import bgu.spl.mics.application.messages.AgentsAvailableEvent;
-import bgu.spl.mics.application.messages.SendAgentsEvent;
+import bgu.spl.mics.application.messages.*;
 import bgu.spl.mics.application.passiveObjects.Squad;
 
 /**
@@ -16,6 +15,7 @@ public class Moneypenny extends Subscriber {
 	private int id;
 	private Squad squad;
 
+
 	public Moneypenny(int id) {
 		super("Moneypenny No: " + id);
 		this.id = id;
@@ -24,11 +24,28 @@ public class Moneypenny extends Subscriber {
 
 	@Override
 	protected void initialize() {
-		subscribeEvent(AgentsAvailableEvent.class, (ev)-> this.complete(ev,squad.getAgents(ev.getSerialAgentsNumbersNumber())));
+		subscribeEvent(AgentsAvailableEvent.class, (ev)-> {
+			boolean isAgentsAvailable = squad.getAgents(ev.getSerialAgentsNumbersNumber());
+			// if the agents available -> returns Moneypenny id, else returns -1
+			if(isAgentsAvailable)
+				complete(ev,id);
+			else
+				complete(ev,-1);}
+		);
 		subscribeEvent(SendAgentsEvent.class, (ev) -> {
 			squad.sendAgents(ev.getSerialAgentsNumbers(),ev.getDuration());
 			complete(ev,true);
 		}  );
+		subscribeEvent(GetAgentsNamesEvent.class, (ev) -> {
+			complete(ev,squad.getAgentsNames(ev.getAgentsSerialNumbersNumber()));
+		});
+		subscribeEvent(ReleaseAgentEvent.class, (ev) -> {
+			squad.releaseAgents(ev.getAgentsSerialNumbersNumber());
+			complete(ev,true);
+		});
 	}
 
+	public int getId() {
+		return id;
+	}
 }
