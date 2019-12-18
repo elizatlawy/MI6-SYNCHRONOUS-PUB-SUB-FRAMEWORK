@@ -1,5 +1,7 @@
 package bgu.spl.mics;
 
+import bgu.spl.mics.application.messages.TerminateBroadcast;
+
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -63,7 +65,11 @@ public class MessageBrokerImpl implements MessageBroker {
                 ConcurrentLinkedQueue<Subscriber> subscribersOfCurrBroadcast = mapOfSubscribers.get(b.getClass());
                 if (subscribersOfCurrBroadcast != null && !subscribersOfCurrBroadcast.isEmpty()) {
                     for (RunnableSubPub currSubscriber : subscribersOfCurrBroadcast)
-                        mapOfToDoMessages.get(currSubscriber).add(b);
+                        if(b instanceof TerminateBroadcast){
+                           mapOfToDoMessages.get (currSubscriber).addFirst(b);
+                        }
+                        else
+                            mapOfToDoMessages.get(currSubscriber).add(b);
                 }
             }
         }

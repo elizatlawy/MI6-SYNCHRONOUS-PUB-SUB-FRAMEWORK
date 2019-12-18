@@ -47,6 +47,7 @@ public class TimeService extends Publisher {
 			} catch (InterruptedException e) {}
 		}
 		getSimplePublisher().sendBroadcast(new TerminateBroadcast());
+
 	}
 
 	@Override

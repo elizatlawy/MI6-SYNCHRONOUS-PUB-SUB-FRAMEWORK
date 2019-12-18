@@ -1,6 +1,5 @@
 package bgu.spl.mics.application;
 
-import bgu.spl.mics.Publisher;
 import bgu.spl.mics.Subscriber;
 import bgu.spl.mics.application.passiveObjects.Agent;
 import bgu.spl.mics.application.passiveObjects.Inventory;
@@ -10,6 +9,7 @@ import bgu.spl.mics.application.subscribers.Intelligence;
 import bgu.spl.mics.application.publishers.TimeService;
 import bgu.spl.mics.application.subscribers.M;
 import bgu.spl.mics.application.subscribers.Moneypenny;
+import bgu.spl.mics.application.subscribers.Q;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -18,6 +18,8 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * This is the Main class of the application. You should parse the input file,
@@ -34,12 +36,29 @@ public class MI6Runner {
             LinkedList<Subscriber> subscribers = new LinkedList<>();
             insertToInventory(obj);
             insertToSquad(obj);
-            insertToService(obj,subscribers);
+            insertSubscribers(obj,subscribers);
+            int duration = obj.services.time;
+            TimeService timeService = TimeService.getInstance();
+            timeService.setDuration(duration);
+            // run
+            executeThreads(subscribers, timeService);
         } catch (IOException e) {
             throw new RuntimeException("illegal json file");
         }
-        // run
+
+
+
         // TODO: Terminate TimeService at the and
+    }
+
+    private static void executeThreads ( List<Subscriber> subscribers, TimeService timeService ){
+        ExecutorService executor = Executors.newFixedThreadPool(subscribers.size()+1);
+        //initialize all subscribers before the timeService
+        for( Subscriber currSubscriber : subscribers)
+            executor.execute(currSubscriber);
+        executor.execute(timeService);
+
+
     }
 
     private static void insertToInventory(JsonObject obj) {
@@ -60,7 +79,7 @@ public class MI6Runner {
         Squad.getInstance().load(AgentsToInsert.toArray(new Agent[AgentsToInsert.size()]));
     }
 
-    private static void insertToService(JsonObject obj, List<Subscriber> subscribers) {
+    private static void insertSubscribers(JsonObject obj, List<Subscriber> subscribers) {
 
         for (int i = 0; i < obj.services.M; i++)
             subscribers.add(new M((i+1)));
@@ -76,10 +95,7 @@ public class MI6Runner {
             intel.load(MissionsToLoad);
             subscribers.add(intel);
         }
-        int duration = obj.services.time;
-        TimeService timeService = TimeService.getInstance();
-        timeService.setDuration(duration);
-
+        subscribers.add(new Q());
     }
 }
 
