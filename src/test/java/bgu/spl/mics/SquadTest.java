@@ -25,15 +25,19 @@ SquadTest {
     public void setUp(){
         squad = Squad.getInstance();
     }
-    @AfterEach
-    public void tearDown() throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        Class SquadClass = Class.forName("bgu.spl.mics.application.passiveObjects.Squad");
-        Field instanceFiled = SquadClass.getDeclaredField("instance");
-        instanceFiled.setAccessible(true);
-        Constructor InvConstructor = SquadClass.getDeclaredConstructors()[0];
-        InvConstructor.setAccessible(true);
-        instanceFiled.set(instanceFiled, InvConstructor.newInstance());
-    }
+//    @AfterEach
+////    public void tearDown() throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException, InvocationTargetException, InstantiationException {
+////        Field instance = Squad.SquadHolder.class.getDeclaredField("instance");
+////        instance.setAccessible(true);
+////        instance.set(null, null);
+////
+//////        Class SquadClass = Class.forName("bgu.spl.mics.application.passiveObjects.Squad.SquadHolder");
+//////        Field instanceFiled = SquadClass.getDeclaredField("instance");
+//////        instanceFiled.setAccessible(true);
+//////        Constructor InvConstructor = SquadClass.getDeclaredConstructors()[0];
+//////        InvConstructor.setAccessible(true);
+//////        instanceFiled.set(instanceFiled, InvConstructor.newInstance());
+//    }
 
     @Test
     void getInstanceTest() {

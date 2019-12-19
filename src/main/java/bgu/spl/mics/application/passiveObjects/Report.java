@@ -10,166 +10,170 @@ import java.util.List;
  * You may add ONLY private fields and methods to this class.
  */
 public class Report {
-	private String missionName;
-	private int M;
-	private int Moneypenny;
-	private List<String> AgentsSerialNumbers = new LinkedList<>();
-	private List<String> agentsNames = new LinkedList<>();
-	private String gadgetName;
-	private int qTime;
-	private int timeIssued;
-	private int timeCreated;
+    private String missionName;
+    private int M;
+    private int Moneypenny;
+    private List<String> AgentsSerialNumbers = new LinkedList<>();
+    private List<String> agentsNames = new LinkedList<>();
+    private String gadgetName;
+    private int qTime;
+    private int timeIssued;
+    private int timeCreated;
 
-	public Report(int timeCreated) {
-		this.timeCreated = timeCreated;
-	}
+    public Report(int timeCreated) {
+        this.timeCreated = timeCreated;
+    }
 
 
-	/**
+    /**
      * Retrieves the mission name.
      */
-	public String getMissionName() {
-		return missionName;
-	}
+    public String getMissionName() {
+        return missionName;
+    }
 
-	/**
-	 * Sets the mission name.
-	 */
-	public void setMissionName(String missionName) {
-		this.missionName = missionName;
-	}
+    /**
+     * Sets the mission name.
+     */
+    public void setMissionName(String missionName) {
+        this.missionName = missionName;
+    }
 
-	/**
-	 * Retrieves the M's id.
-	 */
-	public int getM() {
-		return M;
-	}
+    /**
+     * Retrieves the M's id.
+     */
+    public int getM() {
+        return M;
+    }
 
-	/**
-	 * Sets the M's id.
-	 */
-	public void setM(int m) {
-		this.M = m;
-	}
+    /**
+     * Sets the M's id.
+     */
+    public void setM(int m) {
+        this.M = m;
+    }
 
-	/**
-	 * Retrieves the Moneypenny's id.
-	 */
-	public int getMoneypenny() {
-		return Moneypenny;
-	}
+    /**
+     * Retrieves the Moneypenny's id.
+     */
+    public int getMoneypenny() {
+        return Moneypenny;
+    }
 
-	/**
-	 * Sets the Moneypenny's id.
-	 */
-	public void setMoneypenny(int moneypenny) {
-		this.Moneypenny = moneypenny;
-	}
+    /**
+     * Sets the Moneypenny's id.
+     */
+    public void setMoneypenny(int moneypenny) {
+        this.Moneypenny = moneypenny;
+    }
 
-	/**
-	 * Retrieves the serial numbers of the agents.
-	 * <p>
-	 * @return The serial numbers of the agents.
-	 */
-	public List<String> getAgentsSerialNumbers() {
-		return AgentsSerialNumbers;
-	}
+    /**
+     * Retrieves the serial numbers of the agents.
+     * <p>
+     *
+     * @return The serial numbers of the agents.
+     */
+    public List<String> getAgentsSerialNumbers() {
+        return AgentsSerialNumbers;
+    }
 
-	/**
-	 * Sets the serial numbers of the agents.
-	 */
-	public void setAgentsSerialNumbers(List<String> agentsSerialNumbers) {
-		this.AgentsSerialNumbers.clear();
-		this.AgentsSerialNumbers.addAll(agentsSerialNumbers);
-	}
-	/**
-	 * Retrieves the agents names.
-	 * <p>
-	 * @return The agents names.
-	 */
-	public List<String> getAgentsNames() {
-		return agentsNames;
-	}
+    /**
+     * Sets the serial numbers of the agents.
+     */
+    public void setAgentsSerialNumbers(List<String> agentsSerialNumbers) {
+        this.AgentsSerialNumbers.clear();
+        this.AgentsSerialNumbers.addAll(agentsSerialNumbers);
+    }
 
-	/**
-	 * Sets the agents names.
-	 */
-	public void setAgentsNames(List<String> agentsNames) {
-		this.agentsNames.clear();
-		this.agentsNames.addAll(agentsNames);
-	}
+    /**
+     * Retrieves the agents names.
+     * <p>
+     *
+     * @return The agents names.
+     */
+    public List<String> getAgentsNames() {
+        return agentsNames;
+    }
 
-	/**
-	 * Retrieves the name of the gadget.
-	 * <p>
-	 * @return the name of the gadget.
-	 */
-	public String getGadgetName() {
-		return gadgetName;
-	}
+    /**
+     * Sets the agents names.
+     */
+    public void setAgentsNames(List<String> agentsNames) {
+        this.agentsNames.clear();
+        this.agentsNames.addAll(agentsNames);
+    }
 
-	/**
-	 * Sets the name of the gadget.
-	 */
-	public void setGadgetName(String gadgetName) {
-		this.gadgetName = gadgetName;
-	}
+    /**
+     * Retrieves the name of the gadget.
+     * <p>
+     *
+     * @return the name of the gadget.
+     */
+    public String getGadgetName() {
+        return gadgetName;
+    }
 
-	/**
-	 * Retrieves the time-tick in which Q Received the GadgetAvailableEvent for that mission.
-	 */
-	public int getQTime() {
-		return qTime;
-	}
+    /**
+     * Sets the name of the gadget.
+     */
+    public void setGadgetName(String gadgetName) {
+        this.gadgetName = gadgetName;
+    }
 
-	/**
-	 * Sets the time-tick in which Q Received the GadgetAvailableEvent for that mission.
-	 */
-	public void setQTime(int qTime) {
-		this.qTime = qTime;
-	}
+    /**
+     * Retrieves the time-tick in which Q Received the GadgetAvailableEvent for that mission.
+     */
+    public int getQTime() {
+        return qTime;
+    }
 
-	/**
-	 * Retrieves the time when the mission was sent by an Intelligence Publisher.
-	 */
-	public int getTimeIssued() {
-		return timeIssued;
-	}
+    /**
+     * Sets the time-tick in which Q Received the GadgetAvailableEvent for that mission.
+     */
+    public void setQTime(int qTime) {
+        this.qTime = qTime;
+    }
 
-	/**
-	 * Sets the time when the mission was sent by an Intelligence Publisher.
-	 */
-	public void setTimeIssued(int timeIssued) {
-		this.timeIssued = timeIssued;
-	}
+    /**
+     * Retrieves the time when the mission was sent by an Intelligence Publisher.
+     */
+    public int getTimeIssued() {
+        return timeIssued;
+    }
 
-	/**
-	 * Retrieves the time-tick when the report has been created.
-	 */
-	public int getTimeCreated() {
-		return timeCreated;
-	}
+    /**
+     * Sets the time when the mission was sent by an Intelligence Publisher.
+     */
+    public void setTimeIssued(int timeIssued) {
+        this.timeIssued = timeIssued;
+    }
 
-	/**
-	 * Sets the time-tick when the report has been created.
-	 */
-	public void setTimeCreated(int timeCreated) {
-		this.timeCreated = timeCreated;
-	}
+    /**
+     * Retrieves the time-tick when the report has been created.
+     */
+    public int getTimeCreated() {
+        return timeCreated;
+    }
 
-	@Override
-	public String toString() {
-		return "Report{" +
-				"missionName='" + missionName + '\'' +
-				", M=" + M +
-				", Moneypenny=" + Moneypenny +
-				", AgentsSerialNumbers=" + AgentsSerialNumbers +
-				", agentsNames=" + agentsNames +
-				", gadgetName='" + gadgetName + '\'' +
-				", qTime=" + qTime +
-				", timeIssued=" + timeIssued +
-				", timeCreated=" + timeCreated +
-				'}' + '\n';
-	}
+    /**
+     * Sets the time-tick when the report has been created.
+     */
+    public void setTimeCreated(int timeCreated) {
+        this.timeCreated = timeCreated;
+    }
+
+    @Override
+    public String toString() {
+        return "Report{" +
+                "missionName='" + missionName + '\'' +
+                ", M=" + M +
+                ", Moneypenny=" + Moneypenny +
+                ", AgentsSerialNumbers=" + AgentsSerialNumbers +
+                ", agentsNames=" + agentsNames +
+                ", gadgetName='" + gadgetName + '\'' +
+                ", qTime=" + qTime +
+                ", timeIssued=" + timeIssued +
+                ", timeCreated=" + timeCreated +
+                '}' + '\n';
+    }
 }

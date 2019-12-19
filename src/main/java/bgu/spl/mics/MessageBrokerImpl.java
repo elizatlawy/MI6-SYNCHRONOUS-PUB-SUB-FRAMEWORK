@@ -14,11 +14,17 @@ import java.util.concurrent.LinkedBlockingDeque;
  * Only private fields and methods can be added to this class.
  */
 public class MessageBrokerImpl implements MessageBroker {
-    private ConcurrentHashMap<Class<? extends Message>, ConcurrentLinkedQueue<Subscriber>> mapOfSubscribers = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<Class<? extends Message>, ConcurrentLinkedQueue<Subscriber>> mapOfSubscribers ;
 
-    private ConcurrentHashMap<Subscriber, LinkedBlockingDeque<Message>> mapOfToDoMessages = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<Subscriber, LinkedBlockingDeque<Message>> mapOfToDoMessages;
 
-    private ConcurrentHashMap<Event, Future> mapOfevents = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<Event, Future> mapOfevents;
+
+    private MessageBrokerImpl() {
+        this.mapOfSubscribers =  new ConcurrentHashMap<>();
+        this.mapOfToDoMessages = new ConcurrentHashMap<>();
+        this.mapOfevents = new ConcurrentHashMap<>();
+    }
 
     private static class MessageBrokerHolder {
         private static MessageBroker instance = new MessageBrokerImpl();

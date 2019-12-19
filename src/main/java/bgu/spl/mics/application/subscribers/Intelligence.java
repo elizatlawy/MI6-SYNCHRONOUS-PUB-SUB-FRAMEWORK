@@ -11,33 +11,33 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * A Publisher only.
  * Holds a list of Info objects and sends them
- *
+ * <p>
  * You can add private fields and public methods to this class.
  * You MAY change constructor signatures and even add new public constructors.
  */
 public class Intelligence extends Subscriber {
-	private int id;
-	private List<MissionInfo> missions = new CopyOnWriteArrayList<>();
+    private int id;
+    private List<MissionInfo> missions = new CopyOnWriteArrayList<>();
 
-	public Intelligence( int id) {
-		super("Intelligence No: " + id);
-		this.id = id;
-	}
+    public Intelligence(int id) {
+        super("Intelligence No: " + id);
+        this.id = id;
+    }
 
-	@Override
-	protected void initialize() {
-		subscribeBroadcast(TickBroadcast.class, (tickBroadcast)-> {
-			for (MissionInfo currMission : missions) {
-				if (currMission.getTimeIssued() == tickBroadcast.getTick()) {
-					System.out.println("Intelligence No:" + id + " is sending MissionReceivedEvent of: " + currMission.getMissionName());
-					getSimplePublisher().sendEvent(new MissionReceivedEvent(currMission));
-				}
-			}
-			}); // end of lambda
-	}
+    @Override
+    protected void initialize() {
+        subscribeBroadcast(TickBroadcast.class, (tickBroadcast) -> {
+            for (MissionInfo currMission : missions) {
+                if (currMission.getTimeIssued() == tickBroadcast.getTick()) {
+                    System.out.println("Intelligence No:" + id + " is sending MissionReceivedEvent of: " + currMission.getMissionName());
+                    getSimplePublisher().sendEvent(new MissionReceivedEvent(currMission));
+                }
+            }
+        }); // end of lambda
+    }
 
-	public void load(List<MissionInfo> missionsToLoad){
-		this.missions.addAll(missionsToLoad);
-	}
+    public void load(List<MissionInfo> missionsToLoad) {
+        this.missions.addAll(missionsToLoad);
+    }
 
 }

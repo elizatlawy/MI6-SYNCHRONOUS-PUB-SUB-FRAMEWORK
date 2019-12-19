@@ -24,7 +24,7 @@ public class Moneypenny extends Subscriber {
     @Override
     protected void initialize() {
         // we assign the SendAgentsEvent only to 1 MoneyPenny with the ID of 1, all others will do the reset
-        if(id == 1){
+        if (id == 1) {
             subscribeEvent(SendAgentsEvent.class, (ev) -> {
                 System.out.println("Moneypenny No:" + id + " is STARTING executing SendAgentsEvent " + ev.getSerialAgentsNumbers().toString());
                 squad.sendAgents(ev.getSerialAgentsNumbers(), ev.getDuration());
@@ -38,8 +38,7 @@ public class Moneypenny extends Subscriber {
                 complete(ev, true);
                 System.out.println("Moneypenny No:" + id + " is FINISHED executing ReleaseAgentEvent " + ev.getAgentsSerialNumbers().toString());
             });
-        }
-        else{ // all other MoneyPenny do AgentsAvailableEvent & GetAgentsNamesEvent
+        } else { // all other MoneyPenny do AgentsAvailableEvent & GetAgentsNamesEvent
             subscribeEvent(AgentsAvailableEvent.class, (ev) -> {
                 System.out.println("Moneypenny No:" + id + " is STARTING executing AgentsAvailableEvent of " + ev.getSerialAgentsNumbersNumber().toString());
                 boolean isAgentsAvailable = squad.getAgents(ev.getSerialAgentsNumbersNumber());
