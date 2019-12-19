@@ -16,6 +16,7 @@ public class Agent {
 		this.serialNumber = serialNumber;
 		this.isAvailable = isAvailable;
 	}
+
 	/**
 	 * Sets the serial number of an agent.
 	 */

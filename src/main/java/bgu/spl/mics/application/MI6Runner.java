@@ -1,5 +1,6 @@
 package bgu.spl.mics.application;
 
+import bgu.spl.mics.Printer;
 import bgu.spl.mics.Subscriber;
 import bgu.spl.mics.application.passiveObjects.*;
 import bgu.spl.mics.application.subscribers.Intelligence;
@@ -35,14 +36,15 @@ public class MI6Runner {
             loadInventory(obj);
             loadSquad(obj);
             loadSubscribers(obj, subscribers);
+            // set duration to TimeService
             int duration = obj.services.time;
             TimeService timeService = TimeService.getInstance();
             timeService.setDuration(duration);
-            // run
-//            Squad squad = Squad.getInstance();
-//            Inventory inventory = Inventory.getInstance();
+            // run threads
             executeThreads(subscribers);
-
+            // printToFile
+            Inventory.getInstance().printToFile(args[2]);
+            Diary.getInstance().printToFile(args[3]);
         } catch (IOException e) {
             throw new RuntimeException("illegal json file");
         }
@@ -50,19 +52,19 @@ public class MI6Runner {
 
     private static void executeThreads(List<Subscriber> subscribers) {
         List<Thread> threads = new LinkedList<>();
-        //initialize all subscribers before the timeService
+        // initialize all subscribers before the timeService
         for (Subscriber currSubscriber : subscribers) {
-            Thread t = new Thread(currSubscriber, currSubscriber.getName());
-            threads.add(t);
-            t.start();
+            Thread thread = new Thread(currSubscriber, currSubscriber.getName());
+            threads.add(thread);
+            thread.start();
         }
         try {
             Thread.sleep(10);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Thread timeThread = new Thread(TimeService.getInstance(), TimeService.getInstance().getName());
-        timeThread.start();
+        Thread timeServiceThread = new Thread(TimeService.getInstance(), TimeService.getInstance().getName());
+        timeServiceThread.start();
 
         for (int i = 0; i < threads.size(); i++) {
             Thread t = threads.get(i);
@@ -74,7 +76,7 @@ public class MI6Runner {
             } catch (InterruptedException e) {
             }
         }
-        //todo: delete this before submission
+        // Todo: delete this before submission
         System.out.println("THE Diary: ");
         System.out.println(Diary.getInstance().toString());
     }

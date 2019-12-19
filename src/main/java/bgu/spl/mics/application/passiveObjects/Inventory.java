@@ -1,5 +1,7 @@
 package bgu.spl.mics.application.passiveObjects;
 
+import bgu.spl.mics.Printer;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,7 +46,7 @@ public class Inventory {
 	/**
      * acquires a gadget and returns 'true' if it exists.
      * <p>
-     * @param gadget 		Name of the gadget to check if available
+     * @param gadget Name of the gadget to check if available
      * @return 	‘false’ if the gadget is missing, and ‘true’ otherwise
      */
 	public boolean getItem(String gadget){
@@ -61,11 +63,12 @@ public class Inventory {
 	 *
 	 * <p>
 	 * Prints to a file name @filename a serialized object List<String> which is a
-	 * list of all the of the gadgeds.
+	 * list of all the of the gadgets.
 	 * This method is called by the main method in order to generate the output.
 	 */
 	public void printToFile(String filename){
-		//TODO: Implement this
+		LinkedList<String> gadgetsToPrint = new LinkedList<>(gadgets);
+		Printer.Print(gadgetsToPrint,filename);
 	}
 
 	@Override

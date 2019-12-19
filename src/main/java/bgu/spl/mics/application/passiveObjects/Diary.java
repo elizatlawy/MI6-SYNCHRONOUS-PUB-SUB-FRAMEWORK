@@ -1,5 +1,7 @@
 package bgu.spl.mics.application.passiveObjects;
 
+import bgu.spl.mics.Printer;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -54,7 +56,13 @@ public class Diary {
 	 * This method is called by the main method in order to generate the output.
 	 */
 	public void printToFile(String filename){
-		//TODO: Implement this
+		// print number of received missions (total field)
+		Printer.Print(total,filename);
+		// print reports
+		LinkedList<Report> reportsToPrint = new LinkedList<>(reports);
+		Printer.Print(reportsToPrint,filename);
+
+
 	}
 
 	/**
