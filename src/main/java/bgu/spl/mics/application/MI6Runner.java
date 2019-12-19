@@ -47,7 +47,7 @@ public class MI6Runner {
             Inventory inv = Inventory.getInstance();
             System.out.println(inv.toString());
             // run
-            //executeThreads(subscribers, timeService);
+            executeThreads(subscribers, timeService);
 
         } catch (IOException e) {
             throw new RuntimeException("illegal json file");
@@ -113,10 +113,10 @@ public class MI6Runner {
             intel.load(MissionsToLoad);
             subscribers.add(intel);
         }
-        for (int i = 0; i < obj.services.Moneypenny; i++)
-            subscribers.add(new Moneypenny(i + 1));
         for (int i = 0; i < obj.services.M; i++)
             subscribers.add(new M((i + 1)));
+        for (int i = 0; i < obj.services.Moneypenny; i++)
+            subscribers.add(new Moneypenny(i + 1));
         subscribers.add(new Q());
     }
 }

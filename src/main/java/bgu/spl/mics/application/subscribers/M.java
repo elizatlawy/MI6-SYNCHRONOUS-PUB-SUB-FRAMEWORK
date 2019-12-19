@@ -42,30 +42,40 @@ public class M extends Subscriber {
 
                 if(moneypennyID != null){
                     Future<Integer> gadgetAvailable = getSimplePublisher().sendEvent(new GadgetAvailableEvent(currMission.getGadget()));
+                    // todo:: fixed get dead-lock bug here!!
                     qtime = gadgetAvailable.get();
                 }
                 // check if can execute mission
-                if ((((moneypennyID > 0) && qtime > 0)) && (qtime < currMission.getTimeExpired())) {
+                if ((moneypennyID != null) && ((moneypennyID > 0) & qtime > 0) && (qtime < currMission.getTimeExpired())) {
                     Future<Boolean> missionComplete = getSimplePublisher().sendEvent(new SendAgentsEvent(currMission.getSerialAgentsNumbers(), currMission.getDuration()));
-                    missionComplete.get();
-                    Future<List<String>> agentsNamesFuture = getSimplePublisher().sendEvent(new GetAgentsNamesEvent(currMission.getSerialAgentsNumbers()));
-                    // the mission finished, can write the report
-                    Report missionReport = new Report(currTick);
-                    missionReport.setMissionName(currMission.getMissionName());
-                    missionReport.setM(id);
-                    missionReport.setMoneypenny(moneypennyID);
-                    missionReport.setAgentsSerialNumbers(currMission.getSerialAgentsNumbers());
-                    missionReport.setAgentsNames(agentsNamesFuture.get());
-                    missionReport.setGadgetName(currMission.getGadget());
-                    missionReport.setQTime(qtime);
-                    missionReport.setTimeIssued(currMission.getTimeIssued());
-                    diary.addReport(missionReport);
-                    System.out.println("M No:" + id + " is FINISHED executing MissionReceivedEvent of: " + currMission.getMissionName() + ": MISSION SUCCEEDED");
+                    // todo:: fixed get dead-lock bug here!!
+                    //missionComplete.get((currMission.getTimeExpired() - qtime)*100, TimeUnit.MILLISECONDS);
+                    Future<List<String>> agentsNamesFuture = null;
+                    if( missionComplete.get((currMission.getTimeExpired() - qtime)*100, TimeUnit.MILLISECONDS) != null){
+                        agentsNamesFuture = getSimplePublisher().sendEvent(new GetAgentsNamesEvent(currMission.getSerialAgentsNumbers()));
+                    }
+                    if(agentsNamesFuture.get((currMission.getTimeExpired() - qtime)*100, TimeUnit.MILLISECONDS) != null){
+                        // the mission finished, can write the report
+                        Report missionReport = new Report(currTick);
+                        missionReport.setMissionName(currMission.getMissionName());
+                        missionReport.setM(id);
+                        missionReport.setMoneypenny(moneypennyID);
+                        missionReport.setAgentsSerialNumbers(currMission.getSerialAgentsNumbers());
+                        // todo:: fixed get dead-lock bug here!!
+                        missionReport.setAgentsNames(agentsNamesFuture.get());
+                        missionReport.setGadgetName(currMission.getGadget());
+                        missionReport.setQTime(qtime);
+                        missionReport.setTimeIssued(currMission.getTimeIssued());
+                        diary.addReport(missionReport);
+                        System.out.println("M No:" + id + " is FINISHED executing MissionReceivedEvent of: " + currMission.getMissionName() + ": MISSION SUCCEEDED");
+
+                    }
                 }
                 // time is expired -> Mission abort
                 else {
                     System.out.println("M No:" + id + " is FINISHED executing MissionReceivedEvent of: " + currMission.getMissionName() + ": MISSION FAILED");
-                    getSimplePublisher().sendEvent(new ReleaseAgentEvent(currMission.getSerialAgentsNumbers()));
+                    if((moneypennyID != null && moneypennyID != -1))
+                        getSimplePublisher().sendEvent(new ReleaseAgentEvent(currMission.getSerialAgentsNumbers()));
                 }
             }
             diary.increaseTotal();
