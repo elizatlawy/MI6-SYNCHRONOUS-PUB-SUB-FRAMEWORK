@@ -14,6 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * <p>
  * You can add ONLY private fields and methods to this class as you see fit.
  */
+
 public class Diary {
 	private List<Report> reports;
 	private AtomicInteger total;
