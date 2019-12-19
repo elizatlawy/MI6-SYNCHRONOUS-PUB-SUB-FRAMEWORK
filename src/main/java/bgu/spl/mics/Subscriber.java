@@ -137,7 +137,7 @@ public abstract class Subscriber extends RunnableSubPub {
             try {
                 Message toDoMessage = getSimplePublisher().messageBroker.awaitMessage(this);
                 if (!(toDoMessage instanceof TickBroadcast))
-                    System.out.println("GOT MESSAGE: " + getName() + " Message: " + toDoMessage.getClass().getSimpleName());
+                    System.out.println( getName() + " GOT MESSAGE: " + toDoMessage.getClass().getSimpleName());
                 if (callBacks.containsKey(toDoMessage.getClass())) {
                     Callback callback = callBacks.get(toDoMessage.getClass());
                     callback.call(toDoMessage);

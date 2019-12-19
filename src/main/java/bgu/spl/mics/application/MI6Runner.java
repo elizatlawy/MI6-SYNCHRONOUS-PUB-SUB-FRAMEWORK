@@ -72,21 +72,18 @@ public class MI6Runner {
             t.start();
         }
 
-        while (!startCounter.compareAndSet(threads.size(), 0)) {
-        }
+        while (!startCounter.compareAndSet(threads.size(), 0)) {}
         Thread timeThread = new Thread(TimeService.getInstance(), TimeService.getInstance().getName());
-        //shut down the executor service now
         timeThread.start();
 
         for (int i = 0; i < threads.size(); i++) {
             Thread t = threads.get(i);
             try {
-                System.out.println("terminating: " + t.getName());
+                //System.out.println("terminating: " + t.getName());
                 t.join();
-                if (i < threads.size() - 1)
-                    System.out.println("terminated: " + t.getName() + " NEXT: " + threads.get(i + 1));
+//                if (i < threads.size() - 1)
+//                    System.out.println("terminated: " + t.getName() + " NEXT: " + threads.get(i + 1));
             } catch (InterruptedException e) {
-                System.out.println(236334);
             }
         }
         System.out.println("THE Diary: ");

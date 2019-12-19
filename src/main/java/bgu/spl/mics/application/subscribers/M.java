@@ -36,23 +36,18 @@ public class M extends Subscriber {
         subscribeBroadcast(TickBroadcast.class, (brod) -> currTick = brod.getTick());
         subscribeEvent(MissionReceivedEvent.class, (ev) -> {
             currMission = ev.getMission();
-            System.out.println("M No:" + id + " is STARTING executing MissionReceivedEvent of: " + currMission.getMissionName());
+            System.out.println("M No:" + id + " is STARTING executing MissionReceivedEvent of: " + currMission.getMissionName() + " currtick: " + currTick);
             int qtime = -1;
-            Integer moneypennyID = null;
-            Boolean isGadgetAvailable = null;
+            Integer moneypennyID;
             Future<Integer> agentsAvailable = getSimplePublisher().sendEvent(new AgentsAvailableEvent(currMission.getSerialAgentsNumbers()));
-            moneypennyID = agentsAvailable.get();
-            Future<Boolean> gadgetAvailable = getSimplePublisher().sendEvent(new GadgetAvailableEvent(currMission.getGadget()));
-            qtime = currTick;
-            isGadgetAvailable = gadgetAvailable.get();
-            // TODO check if possible to send negative time
-//		if(currTick <= currMission.getTimeExpired()){
-//			moneypennyID = agentsAvailable.get((currMission.getTimeExpired() - currTick)*100, TimeUnit.MILLISECONDS);
-//			isGadgetAvailable = gadgetAvailable.get((currMission.getTimeExpired() - currTick)*100, TimeUnit.MILLISECONDS);
-//			qtime = currTick;
-//		}
+            moneypennyID = agentsAvailable.get((currMission.getTimeExpired() - currTick)*100, TimeUnit.MILLISECONDS);
+
+            if(moneypennyID != null){
+                Future<Integer> gadgetAvailable = getSimplePublisher().sendEvent(new GadgetAvailableEvent(currMission.getGadget()));
+                qtime = gadgetAvailable.get();
+            }
             // check if can execute mission
-            if ((((moneypennyID > 0) && isGadgetAvailable)) && (currTick < currMission.getTimeExpired())) {
+            if ((((moneypennyID > 0) && qtime > 0)) && (qtime < currMission.getTimeExpired())) {
                 Future<Boolean> missionComplete = getSimplePublisher().sendEvent(new SendAgentsEvent(currMission.getSerialAgentsNumbers(), currMission.getDuration()));
                 missionComplete.get();
                 Future<List<String>> agentsNamesFuture = getSimplePublisher().sendEvent(new GetAgentsNamesEvent(currMission.getSerialAgentsNumbers()));

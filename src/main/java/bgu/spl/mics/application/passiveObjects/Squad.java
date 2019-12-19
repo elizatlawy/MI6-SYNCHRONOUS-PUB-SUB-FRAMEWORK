@@ -56,7 +56,7 @@ public class Squad {
     public void releaseAgents(List<String> serials) {
         for (String serialNumber : serials) {
             agents.get(serialNumber).release();
-            System.out.println("###################################### released1111: " + serialNumber);
+            System.out.println("###################################### releaseAgents: " + serialNumber);
         }
     }
 
@@ -72,7 +72,7 @@ public class Squad {
         }
         for (String serialNumber : serials) {
             agents.get(serialNumber).release();
-            System.out.println("###################################### released22222: " + serialNumber);
+            System.out.println("###################################### sendAgents: " + serialNumber);
         }
     }
 
