@@ -9,17 +9,12 @@ import bgu.spl.mics.application.subscribers.Moneypenny;
 import bgu.spl.mics.application.subscribers.Q;
 import com.google.gson.Gson;
 
-import java.io.DataInput;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * This is the Main class of the application. You should parse the input file,
@@ -28,34 +23,32 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 
 public class MI6Runner {
-    //public static AtomicInteger startCounter = new AtomicInteger(0);
 
     public static void main(String[] args) {
         // json parse
         try {
-
+            // read the json
             String str = new String(Files.readAllBytes(Paths.get(args[0])));
             JsonObject obj = new Gson().fromJson(str, JsonObject.class);
-            // read the json to the fields
+            // load objects
             LinkedList<Subscriber> subscribers = new LinkedList<>();
-            insertToInventory(obj);
-            insertToSquad(obj);
-            insertSubscribers(obj, subscribers);
+            loadInventory(obj);
+            loadSquad(obj);
+            loadSubscribers(obj, subscribers);
             int duration = obj.services.time;
             TimeService timeService = TimeService.getInstance();
             timeService.setDuration(duration);
             // run
-            Squad squad = Squad.getInstance();
-            Inventory inventory = Inventory.getInstance();
-            executeThreads(subscribers, timeService);
+//            Squad squad = Squad.getInstance();
+//            Inventory inventory = Inventory.getInstance();
+            executeThreads(subscribers);
 
         } catch (IOException e) {
             throw new RuntimeException("illegal json file");
         }
     }
 
-    private static void executeThreads(List<Subscriber> subscribers, TimeService timeService) {
-        //ExecutorService executor = Executors.newFixedThreadPool(subscribers.size()+1);
+    private static void executeThreads(List<Subscriber> subscribers) {
         List<Thread> threads = new LinkedList<>();
         //initialize all subscribers before the timeService
         for (Subscriber currSubscriber : subscribers) {
@@ -63,10 +56,8 @@ public class MI6Runner {
             threads.add(t);
             t.start();
         }
-
-        //while (!startCounter.compareAndSet(threads.size(), 0)) {}
         try {
-            Thread.sleep(100);
+            Thread.sleep(10);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -83,21 +74,22 @@ public class MI6Runner {
             } catch (InterruptedException e) {
             }
         }
+        //todo: delete this before submission
         System.out.println("THE Diary: ");
         System.out.println(Diary.getInstance().toString());
     }
 
 
-    private static void insertToInventory(JsonObject obj) {
+    private static void loadInventory(JsonObject obj) {
         // get Gadgets
         LinkedList<String> GadgetsToInsert = new LinkedList<>();
         for (String gadget : obj.inventory)
-            GadgetsToInsert.add(new String(gadget));
+            GadgetsToInsert.add(gadget);
         // load Gadgets
         Inventory.getInstance().load(GadgetsToInsert.toArray(new String[0]));
     }
 
-    private static void insertToSquad(JsonObject obj) {
+    private static void loadSquad(JsonObject obj) {
         // get Agents
         LinkedList<Agent> AgentsToInsert = new LinkedList<>();
         for (JsonObject.JsonSquad agent : obj.squad)
@@ -106,8 +98,7 @@ public class MI6Runner {
         Squad.getInstance().load(AgentsToInsert.toArray(new Agent[AgentsToInsert.size()]));
     }
 
-    private static void insertSubscribers(JsonObject obj, List<Subscriber> subscribers) {
-
+    private static void loadSubscribers(JsonObject obj, List<Subscriber> subscribers) {
         for (int i = 0; i < obj.services.intelligence.length; i++) {
             Intelligence intel = new Intelligence(i + 1);
             LinkedList<MissionInfo> MissionsToLoad = new LinkedList<>();
