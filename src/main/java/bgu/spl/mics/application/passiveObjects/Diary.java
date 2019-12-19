@@ -14,6 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * <p>
  * You can add ONLY private fields and methods to this class as you see fit.
  */
+
 public class Diary {
     private List<Report> reports;
     private AtomicInteger total;
@@ -66,29 +67,27 @@ public class Diary {
         //TODO: Implement this
     }
 
-    /**
-     * Gets the total number of received missions (executed / aborted) be all the M-instances.
-     *
-     * @return the total number of received missions (executed / aborted) be all the M-instances.
-     */
-    public int getTotal() {
-        return total.intValue();
-    }
+	/**
+	 * Gets the total number of received missions (executed / aborted) be all the M-instances.
+	 * @return the total number of received missions (executed / aborted) be all the M-instances.
+	 */
+	public int getTotal(){
+		return total.intValue();
+	}
 
 
-    /**
-     * Increments the total number of received missions by 1
-     */
-    public void incrementTotal() {
-        total.compareAndSet(total.intValue(), total.intValue() + 1);
-    }
-
-    // TODO: delete - not allowed public methods
-    @Override
-    public String toString() {
-        return "Diary{" +
-                "reports= " + reports.toString() + '\n' +
-                ", total= " + total +
-                '}';
-    }
+	/**
+	 * Increments the total number of received missions by 1
+	 */
+	public void incrementTotal() {
+		total.compareAndSet(total.intValue(),total.intValue()+1);
+	}
+	// TODO: delete - not allowed public methods
+	@Override
+	public String toString() {
+		return "Diary{" +
+				"reports= " + reports.toString() + '\n' +
+				", total= " + total +
+				'}';
+	}
 }
