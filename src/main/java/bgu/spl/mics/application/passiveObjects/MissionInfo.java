@@ -48,7 +48,7 @@ public class MissionInfo {
      */
     public void setSerialAgentsNumbers(List<String> serialAgentsNumbers) {
         this.serialAgentsNumbers.clear();
-		this.serialAgentsNumbers.addAll(serialAgentsNumbers);
+        this.serialAgentsNumbers.addAll(serialAgentsNumbers);
     }
 
     /**

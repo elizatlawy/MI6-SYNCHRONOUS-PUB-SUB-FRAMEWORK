@@ -19,7 +19,6 @@ import java.util.concurrent.TimeUnit;
 public class M extends Subscriber {
     private int id;
     private Diary diary = Diary.getInstance();
-    ;
     private MissionInfo currMission;
     private int currTick;
 

@@ -20,14 +20,14 @@ public class InventoryTest {
         inventory = Inventory.getInstance();
     }
     @AfterEach
-    public void tearDown() throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        Class InvClass = Class.forName("bgu.spl.mics.application.passiveObjects.Inventory");
-        Field instanceFiled = InvClass.getDeclaredField("instance");
-        instanceFiled.setAccessible(true);
-        Constructor InvConstructor = InvClass.getDeclaredConstructors()[0];
-        InvConstructor.setAccessible(true);
-        instanceFiled.set(instanceFiled, InvConstructor.newInstance());
-    }
+//    public void tearDown() throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException, InvocationTargetException, InstantiationException {
+//        Class InvClass = Class.forName("bgu.spl.mics.application.passiveObjects.Inventory");
+//        Field instanceFiled = InvClass.getDeclaredField("instance");
+//        instanceFiled.setAccessible(true);
+//        Constructor InvConstructor = InvClass.getDeclaredConstructors()[0];
+//        InvConstructor.setAccessible(true);
+//        instanceFiled.set(instanceFiled, InvConstructor.newInstance());
+//    }
 
     @Test
     void getInstanceTest() {

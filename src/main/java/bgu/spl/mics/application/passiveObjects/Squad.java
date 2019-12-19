@@ -47,9 +47,9 @@ public class Squad {
      * Releases agents.
      */
     public void releaseAgents(List<String> serials) {
-        if(serials != null){
+        if (serials != null) {
             for (String serialNumber : serials) {
-                if(agents.get(serialNumber) != null){
+                if (agents.get(serialNumber) != null) {
                     agents.get(serialNumber).release();
                     System.out.println("###################################### releaseAgents: " + serialNumber);
                 }

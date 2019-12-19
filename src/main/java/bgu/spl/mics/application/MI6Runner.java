@@ -43,8 +43,8 @@ public class MI6Runner {
             // run threads
             executeThreads(subscribers);
             // printToFile
-            Inventory.getInstance().printToFile(args[2]);
-            Diary.getInstance().printToFile(args[3]);
+            //Inventory.getInstance().printToFile(args[2]);
+            //Diary.getInstance().printToFile(args[3]);
         } catch (IOException e) {
             throw new RuntimeException("illegal json file");
         }
