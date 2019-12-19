@@ -16,13 +16,6 @@ public class Squad {
 
     private Map<String, Agent> agents;
 
-//    public boolean isAllReleased() {
-//        for (Agent agent : agents.values())
-//            if (!agent.isAvailable())
-//                return false;
-//        return true;
-//    }
-
     private static class SquadHolder {
         private static Squad instance = new Squad();
     }

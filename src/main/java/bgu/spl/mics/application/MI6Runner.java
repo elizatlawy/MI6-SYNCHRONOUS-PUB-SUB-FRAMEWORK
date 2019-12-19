@@ -65,6 +65,11 @@ public class MI6Runner {
         }
 
         //while (!startCounter.compareAndSet(threads.size(), 0)) {}
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Thread timeThread = new Thread(TimeService.getInstance(), TimeService.getInstance().getName());
         timeThread.start();
 
