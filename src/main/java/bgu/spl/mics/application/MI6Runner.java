@@ -45,7 +45,7 @@ public class MI6Runner {
             Squad squad = Squad.getInstance();
             Inventory inventory = Inventory.getInstance();
             executeThreads(subscribers);
-            // print
+            // printToFile
             inventory.printToFile(args[1]);
             Diary.getInstance().printToFile(args[2]);
 
