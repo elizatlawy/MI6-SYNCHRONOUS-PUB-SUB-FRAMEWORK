@@ -35,7 +35,7 @@ public class M extends Subscriber {
             // check first if we can still handle the mission in time
             if(currTick < currMission.getTimeExpired()){
                 System.out.println("M No:" + id + " is STARTING executing MissionReceivedEvent of: " + currMission.getMissionName() + " currtick: " + currTick);
-                int qtime = -1;
+                Integer qtime = -1;
                 Integer moneypennyID;
                 Future<Integer> agentsAvailable = getSimplePublisher().sendEvent(new AgentsAvailableEvent(currMission.getSerialAgentsNumbers()));
                 moneypennyID = agentsAvailable.get((currMission.getTimeExpired() - currTick)*100, TimeUnit.MILLISECONDS);
@@ -43,10 +43,10 @@ public class M extends Subscriber {
                 if(moneypennyID != null){
                     Future<Integer> gadgetAvailable = getSimplePublisher().sendEvent(new GadgetAvailableEvent(currMission.getGadget()));
                     // todo:: fixed get dead-lock bug here!!
-                    qtime = gadgetAvailable.get();
+                    qtime = gadgetAvailable.get((currMission.getTimeExpired() - currTick)*100, TimeUnit.MILLISECONDS);
                 }
                 // check if can execute mission
-                if ((moneypennyID != null) && ((moneypennyID > 0) & qtime > 0) && (qtime < currMission.getTimeExpired())) {
+                if ((moneypennyID != null & qtime != null) && ((moneypennyID > 0) & qtime > 0) && (qtime < currMission.getTimeExpired())) {
                     Future<Boolean> missionComplete = getSimplePublisher().sendEvent(new SendAgentsEvent(currMission.getSerialAgentsNumbers(), currMission.getDuration()));
                     // todo:: fixed get dead-lock bug here!!
                     //missionComplete.get((currMission.getTimeExpired() - qtime)*100, TimeUnit.MILLISECONDS);
@@ -54,7 +54,7 @@ public class M extends Subscriber {
                     if( missionComplete.get((currMission.getTimeExpired() - qtime)*100, TimeUnit.MILLISECONDS) != null){
                         agentsNamesFuture = getSimplePublisher().sendEvent(new GetAgentsNamesEvent(currMission.getSerialAgentsNumbers()));
                     }
-                    if(agentsNamesFuture.get((currMission.getTimeExpired() - qtime)*100, TimeUnit.MILLISECONDS) != null){
+                    if((agentsNamesFuture != null) && agentsNamesFuture.get((currMission.getTimeExpired() - qtime)*100, TimeUnit.MILLISECONDS) != null){
                         // the mission finished, can write the report
                         Report missionReport = new Report(currTick);
                         missionReport.setMissionName(currMission.getMissionName());
@@ -78,7 +78,7 @@ public class M extends Subscriber {
                         getSimplePublisher().sendEvent(new ReleaseAgentEvent(currMission.getSerialAgentsNumbers()));
                 }
             }
-            diary.increaseTotal();
+            diary.incrementTotal();
         }); // end of lambda
     }
 }

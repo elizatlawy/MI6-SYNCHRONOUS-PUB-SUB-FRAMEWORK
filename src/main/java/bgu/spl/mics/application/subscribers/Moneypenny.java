@@ -44,6 +44,7 @@ public class Moneypenny extends Subscriber {
 
             subscribeBroadcast(TerminateBroadcast.class,b->{
                 // TODO:: release all agents to relaese all stuck M & resolve to false
+                Thread.currentThread().interrupt();
                 if(squad.isAllReleased())
                     terminate();
                 shouldTerminate=true;

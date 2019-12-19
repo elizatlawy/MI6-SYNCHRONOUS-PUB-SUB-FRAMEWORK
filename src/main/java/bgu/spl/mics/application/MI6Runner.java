@@ -44,9 +44,9 @@ public class MI6Runner {
             int duration = obj.services.time;
             TimeService timeService = TimeService.getInstance();
             timeService.setDuration(duration);
-            Inventory inv = Inventory.getInstance();
-            System.out.println(inv.toString());
             // run
+            Squad squad = Squad.getInstance();
+            Inventory inventory = Inventory.getInstance();
             executeThreads(subscribers, timeService);
 
         } catch (IOException e) {
@@ -71,10 +71,10 @@ public class MI6Runner {
         for (int i = 0; i < threads.size(); i++) {
             Thread t = threads.get(i);
             try {
-                //System.out.println("terminating: " + t.getName());
+                System.out.println("terminating: " + t.getName());
                 t.join();
-//                if (i < threads.size() - 1)
-//                    System.out.println("terminated: " + t.getName() + " NEXT: " + threads.get(i + 1));
+                if (i < threads.size() - 1)
+                    System.out.println("terminated: " + t.getName() + " NEXT to terminate: " + threads.get(i + 1));
             } catch (InterruptedException e) {
             }
         }

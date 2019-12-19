@@ -130,7 +130,10 @@ public abstract class Subscriber extends RunnableSubPub {
 
         initialize();
         if(!(this instanceof Moneypenny && ((Moneypenny)this).getId()==1))
-            subscribeBroadcast(TerminateBroadcast.class, (bro) -> terminate());
+            subscribeBroadcast(TerminateBroadcast.class, (bro) ->{
+                terminate();
+                Thread.currentThread().interrupt();
+            });
 
         MI6Runner.startCounter.incrementAndGet();//todo: check how!
         while (!terminated) {

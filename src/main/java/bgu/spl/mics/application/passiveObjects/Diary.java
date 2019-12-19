@@ -66,11 +66,13 @@ public class Diary {
 	}
 
 
-
-	public void increaseTotal() {
+	/**
+	 * Increments the total number of received missions by 1
+	 */
+	public void incrementTotal() {
 		total.compareAndSet(total.intValue(),total.intValue()+1);
 	}
-
+	// TODO: delete - not allowed public methods
 	@Override
 	public String toString() {
 		return "Diary{" +

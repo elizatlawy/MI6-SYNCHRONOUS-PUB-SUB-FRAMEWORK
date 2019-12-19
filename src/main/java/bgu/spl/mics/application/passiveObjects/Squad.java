@@ -109,6 +109,7 @@ public class Squad {
                             currAgent.wait(); // waiting for currAgent to become available
                             break; // break the for loop
                         } catch (InterruptedException e) {
+                            return false;
                         }
 
                     }
