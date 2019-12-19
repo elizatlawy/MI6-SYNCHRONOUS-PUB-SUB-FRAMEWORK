@@ -39,9 +39,13 @@ public class MI6Runner {
             TimeService timeService = TimeService.getInstance();
             timeService.setDuration(duration);
             // run
-//            Squad squad = Squad.getInstance();
-//            Inventory inventory = Inventory.getInstance();
+            Squad squad = Squad.getInstance();
+            Inventory inventory = Inventory.getInstance();
             executeThreads(subscribers);
+            // print
+            inventory.printToFile(args[1]);
+            Diary.getInstance().printToFile(args[2]);
+
 
         } catch (IOException e) {
             throw new RuntimeException("illegal json file");

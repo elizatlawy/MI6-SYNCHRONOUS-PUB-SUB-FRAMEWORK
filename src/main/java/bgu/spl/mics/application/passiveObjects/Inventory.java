@@ -1,5 +1,7 @@
 package bgu.spl.mics.application.passiveObjects;
 
+import bgu.spl.mics.Printer;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -69,6 +71,9 @@ public class Inventory {
      */
     public void printToFile(String filename) {
         //TODO: Implement this
+        LinkedList<String> gadgetsToPrint = new LinkedList<>(gadgets);
+        Printer.Print(gadgetsToPrint,filename);
+
     }
 
     @Override
