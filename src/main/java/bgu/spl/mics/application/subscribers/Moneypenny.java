@@ -4,8 +4,6 @@ import bgu.spl.mics.Subscriber;
 import bgu.spl.mics.application.messages.*;
 import bgu.spl.mics.application.passiveObjects.Squad;
 
-import java.util.concurrent.locks.ReentrantLock;
-
 /**
  * Only this type of Subscriber can access the squad.
  * Three are several Moneypenny-instances - each of them holds a unique serial number that will later be printed on the report.
@@ -36,12 +34,12 @@ public class Moneypenny extends Subscriber {
                 System.out.println("Moneypenny No:" + id + " is FINISHED  executing SendAgentsEvent " + ev.getSerialAgentsNumbers().toString());
             });
             subscribeEvent(ReleaseAgentEvent.class, (ev) -> {
-                System.out.println("Moneypenny No:" + id + " is STARTING executing ReleaseAgentEvent " + ev.getAgentsSerialNumbersNumber().toString());
-                squad.releaseAgents(ev.getAgentsSerialNumbersNumber());
+                System.out.println("Moneypenny No:" + id + " is STARTING executing ReleaseAgentEvent " + ev.getAgentsSerialNumbers().toString());
+                squad.releaseAgents(ev.getAgentsSerialNumbers());
                 complete(ev, true);
                 if(shouldTerminate & squad.isAllReleased())
                     terminate();
-                System.out.println("Moneypenny No:" + id + " is FINISHED executing ReleaseAgentEvent " + ev.getAgentsSerialNumbersNumber().toString());
+                System.out.println("Moneypenny No:" + id + " is FINISHED executing ReleaseAgentEvent " + ev.getAgentsSerialNumbers().toString());
             });
 
             subscribeBroadcast(TerminateBroadcast.class,b->{
@@ -65,7 +63,7 @@ public class Moneypenny extends Subscriber {
 
             });
             subscribeEvent(GetAgentsNamesEvent.class, (ev) -> {
-                complete(ev, squad.getAgentsNames(ev.getAgentsSerialNumbersNumber()));
+                complete(ev, squad.getAgentsNames(ev.getAgentsSerialNumbers()));
             });
 
         }

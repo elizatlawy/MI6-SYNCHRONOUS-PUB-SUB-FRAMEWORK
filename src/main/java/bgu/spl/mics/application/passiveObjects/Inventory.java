@@ -67,4 +67,13 @@ public class Inventory {
 	public void printToFile(String filename){
 		//TODO: Implement this
 	}
+
+	@Override
+	public String toString() {
+		String output = "[";
+		for(String currGadget : gadgets)
+			output = output + "\""+currGadget+"\""+",";
+		output = output.substring(0,output.length()-1) + "]";
+		return output;
+	}
 }

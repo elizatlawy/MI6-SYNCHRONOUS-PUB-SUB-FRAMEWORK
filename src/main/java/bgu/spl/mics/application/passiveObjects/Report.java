@@ -2,7 +2,6 @@ package bgu.spl.mics.application.passiveObjects;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Passive data-object representing a delivery vehicle of the store.
@@ -14,7 +13,7 @@ public class Report {
 	private String missionName;
 	private int M;
 	private int Moneypenny;
-	private List<String> AgentsSerialNumbersNumber = new LinkedList<>();
+	private List<String> AgentsSerialNumbers = new LinkedList<>();
 	private List<String> agentsNames = new LinkedList<>();
 	private String gadgetName;
 	private int qTime;
@@ -73,16 +72,16 @@ public class Report {
 	 * <p>
 	 * @return The serial numbers of the agents.
 	 */
-	public List<String> getAgentsSerialNumbersNumber() {
-		return AgentsSerialNumbersNumber;
+	public List<String> getAgentsSerialNumbers() {
+		return AgentsSerialNumbers;
 	}
 
 	/**
 	 * Sets the serial numbers of the agents.
 	 */
-	public void setAgentsSerialNumbersNumber(List<String> agentsSerialNumbersNumber) {
-		this.AgentsSerialNumbersNumber.clear();
-		this.AgentsSerialNumbersNumber.addAll(agentsSerialNumbersNumber);
+	public void setAgentsSerialNumbers(List<String> agentsSerialNumbers) {
+		this.AgentsSerialNumbers.clear();
+		this.AgentsSerialNumbers.addAll(agentsSerialNumbers);
 	}
 	/**
 	 * Retrieves the agents names.
@@ -165,7 +164,7 @@ public class Report {
 				"missionName='" + missionName + '\'' +
 				", M=" + M +
 				", Moneypenny=" + Moneypenny +
-				", AgentsSerialNumbersNumber=" + AgentsSerialNumbersNumber +
+				", AgentsSerialNumbers=" + AgentsSerialNumbers +
 				", agentsNames=" + agentsNames +
 				", gadgetName='" + gadgetName + '\'' +
 				", qTime=" + qTime +

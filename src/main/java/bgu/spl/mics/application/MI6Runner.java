@@ -33,14 +33,6 @@ public class MI6Runner {
     public static void main(String[] args) {
         // json parse
         try {
-//            Report report = new Report(1);
-//            report.setMissionName("mission");
-//            report.setGadgetName("pistol");
-//            System.out.println(report.toString());
-//            Diary d = Diary.getInstance();
-//            d.addReport(report);
-//            System.out.println("Report: ");
-//            System.out.println(d.toString());
 
             String str = new String(Files.readAllBytes(Paths.get(args[0])));
             JsonObject obj = new Gson().fromJson(str, JsonObject.class);
@@ -52,10 +44,10 @@ public class MI6Runner {
             int duration = obj.services.time;
             TimeService timeService = TimeService.getInstance();
             timeService.setDuration(duration);
+            Inventory inv = Inventory.getInstance();
+            System.out.println(inv.toString());
             // run
-
-
-            executeThreads(subscribers, timeService);
+            //executeThreads(subscribers, timeService);
 
         } catch (IOException e) {
             throw new RuntimeException("illegal json file");

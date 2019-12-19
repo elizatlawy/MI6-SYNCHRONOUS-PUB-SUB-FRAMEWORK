@@ -2,17 +2,16 @@ package bgu.spl.mics.application.messages;
 
 import bgu.spl.mics.Event;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class GetAgentsNamesEvent  implements Event<List<String>> {
-    private List<String> AgentsSerialNumbersNumber;
+    private List<String> AgentsSerialNumbers;
 
-    public GetAgentsNamesEvent(List<String> agentsSerialNumbersNumber) {
-        AgentsSerialNumbersNumber = agentsSerialNumbersNumber;
+    public GetAgentsNamesEvent(List<String> agentsSerialNumbers) {
+        AgentsSerialNumbers = agentsSerialNumbers;
     }
 
-    public List<String> getAgentsSerialNumbersNumber() {
-        return AgentsSerialNumbersNumber;
+    public List<String> getAgentsSerialNumbers() {
+        return AgentsSerialNumbers;
     }
 }
