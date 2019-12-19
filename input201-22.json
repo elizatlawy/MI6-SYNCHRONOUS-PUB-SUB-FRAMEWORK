@@ -139,15 +139,15 @@
                         ],
                         "duration": 15,
                         "gadget": "elicopter",
-                        "missionName": "Mission with time timeIssued 99",
+                        "missionName": "Mission with time timeIssued 30",
                         "timeExpired": 120,
-                        "timeIssued": 99
+                        "timeIssued": 30
                     }
                 ]
                 
             }
         ],
-        "time": 100
+        "time": 50
     },
     "squad": [
         {

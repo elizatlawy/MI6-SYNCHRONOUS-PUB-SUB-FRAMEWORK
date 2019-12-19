@@ -129,18 +129,14 @@ public abstract class Subscriber extends RunnableSubPub {
         getSimplePublisher().messageBroker.register(this);
 
         initialize();
-        if(!(this instanceof Moneypenny && ((Moneypenny)this).getId()==1))
-            subscribeBroadcast(TerminateBroadcast.class, (bro) ->{
-                terminate();
-                Thread.currentThread().interrupt();
-            });
+        subscribeBroadcast(TerminateBroadcast.class, (bro) -> terminate());
 
-        MI6Runner.startCounter.incrementAndGet();//todo: check how!
+        //MI6Runner.startCounter.incrementAndGet();//todo: check how!
         while (!terminated) {
             try {
                 Message toDoMessage = getSimplePublisher().messageBroker.awaitMessage(this);
                 if (!(toDoMessage instanceof TickBroadcast))
-                    System.out.println( getName() + " GOT MESSAGE: " + toDoMessage.getClass().getSimpleName());
+                    System.out.println(getName() + " GOT MESSAGE: " + toDoMessage.getClass().getSimpleName());
                 if (callBacks.containsKey(toDoMessage.getClass())) {
                     Callback callback = callBacks.get(toDoMessage.getClass());
                     callback.call(toDoMessage);

@@ -1,6 +1,7 @@
 package bgu.spl.mics;
 
 import bgu.spl.mics.application.messages.TerminateBroadcast;
+import bgu.spl.mics.application.subscribers.Moneypenny;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
@@ -69,12 +70,14 @@ public class MessageBrokerImpl implements MessageBroker {
                 ConcurrentLinkedQueue<Subscriber> subscribersOfCurrBroadcast = mapOfSubscribers.get(b.getClass());
                 if(subscribersOfCurrBroadcast != null && !subscribersOfCurrBroadcast.isEmpty()){
                     for (Subscriber currSubscriber : subscribersOfCurrBroadcast)
-                        // if it is a TerminateBroadcast we want to execute it first
-                        if(b instanceof TerminateBroadcast){
-                           mapOfToDoMessages.get (currSubscriber).add(b);
+                        if(currSubscriber != null){
+                            // if it is a TerminateBroadcast we want to execute it first
+                            if(b instanceof TerminateBroadcast){
+                                    mapOfToDoMessages.get (currSubscriber).addFirst(b);
+                            }
+                            else
+                                mapOfToDoMessages.get(currSubscriber).add(b);
                         }
-                        else if (currSubscriber != null)
-                            mapOfToDoMessages.get(currSubscriber).add(b);
                 }
             }
         }

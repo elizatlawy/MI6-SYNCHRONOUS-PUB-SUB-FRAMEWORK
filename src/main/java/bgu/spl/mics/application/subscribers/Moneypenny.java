@@ -14,7 +14,7 @@ import bgu.spl.mics.application.passiveObjects.Squad;
 public class Moneypenny extends Subscriber {
     private int id;
     private Squad squad;
-    private boolean shouldTerminate=false;
+
     public Moneypenny(int id) {
         super("Moneypenny No: " + id);
         this.id = id;
@@ -29,28 +29,17 @@ public class Moneypenny extends Subscriber {
                 System.out.println("Moneypenny No:" + id + " is STARTING executing SendAgentsEvent " + ev.getSerialAgentsNumbers().toString());
                 squad.sendAgents(ev.getSerialAgentsNumbers(), ev.getDuration());
                 complete(ev, true);
-                if(shouldTerminate & squad.isAllReleased())
-                    terminate();
                 System.out.println("Moneypenny No:" + id + " is FINISHED  executing SendAgentsEvent " + ev.getSerialAgentsNumbers().toString());
             });
+
             subscribeEvent(ReleaseAgentEvent.class, (ev) -> {
                 System.out.println("Moneypenny No:" + id + " is STARTING executing ReleaseAgentEvent " + ev.getAgentsSerialNumbers().toString());
                 squad.releaseAgents(ev.getAgentsSerialNumbers());
                 complete(ev, true);
-                if(shouldTerminate & squad.isAllReleased())
-                    terminate();
                 System.out.println("Moneypenny No:" + id + " is FINISHED executing ReleaseAgentEvent " + ev.getAgentsSerialNumbers().toString());
             });
-
-            subscribeBroadcast(TerminateBroadcast.class,b->{
-                // TODO:: release all agents to relaese all stuck M & resolve to false
-                Thread.currentThread().interrupt();
-                if(squad.isAllReleased())
-                    terminate();
-                shouldTerminate=true;
-            });
         }
-        else{
+        else{ // all other MoneyPenny do AgentsAvailableEvent & GetAgentsNamesEvent
             subscribeEvent(AgentsAvailableEvent.class, (ev) -> {
                 System.out.println("Moneypenny No:" + id + " is STARTING executing AgentsAvailableEvent of " + ev.getSerialAgentsNumbersNumber().toString());
                 boolean isAgentsAvailable = squad.getAgents(ev.getSerialAgentsNumbersNumber());

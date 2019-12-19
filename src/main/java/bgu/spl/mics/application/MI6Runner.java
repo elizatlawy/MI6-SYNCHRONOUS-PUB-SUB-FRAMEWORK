@@ -28,7 +28,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 
 public class MI6Runner {
-    public static AtomicInteger startCounter = new AtomicInteger(0);
+    //public static AtomicInteger startCounter = new AtomicInteger(0);
 
     public static void main(String[] args) {
         // json parse
@@ -64,7 +64,7 @@ public class MI6Runner {
             t.start();
         }
 
-        while (!startCounter.compareAndSet(threads.size(), 0)) {}
+        //while (!startCounter.compareAndSet(threads.size(), 0)) {}
         Thread timeThread = new Thread(TimeService.getInstance(), TimeService.getInstance().getName());
         timeThread.start();
 
