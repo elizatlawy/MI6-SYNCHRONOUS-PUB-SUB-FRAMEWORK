@@ -26,7 +26,6 @@ import java.util.List;
 public class MI6Runner {
 
     public static void main(String[] args) {
-        // json parse
         try {
             // read the json
             String str = new String(Files.readAllBytes(Paths.get(args[0])));
@@ -46,8 +45,8 @@ public class MI6Runner {
             Inventory inventory = Inventory.getInstance();
             executeThreads(subscribers);
             // printToFile
-            inventory.printToFile(args[1]);
-            Diary.getInstance().printToFile(args[2]);
+//            inventory.printToFile(args[1]);
+//            Diary.getInstance().printToFile(args[2]);
 
 
         } catch (IOException e) {

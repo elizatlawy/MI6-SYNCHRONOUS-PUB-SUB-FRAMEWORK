@@ -7,13 +7,14 @@
         "pistol",
         "elicopter",
         "knife",
-        "baloon"
+        "baloon",
+        "tv"
 
 
     ],
     "services": {
-        "M": 10,
-        "Moneypenny": 10,
+        "M": 100,
+        "Moneypenny": 100,
         "intelligence": [
             {
                 "missions": [
@@ -51,6 +52,14 @@
                         "missionName": "The World Is Not Enough",
                         "timeExpired": 100,
                         "timeIssued": 16
+                    },
+                    {
+                        "serialAgentsNumbers": ["009", "010"],
+                        "duration": 5,
+                        "gadget": "tv",
+                        "missionName": "tv mission",
+                        "timeExpired": 100,
+                        "timeIssued": 25
                     }
                 ]
             },
@@ -62,13 +71,60 @@
                             "006"
                         ],
                         "duration": 7,
-                        "gadget": "Sky Hook",
-                        "missionName": "Thunderball",
+                        "gadget": "pistol",
+                        "missionName": "pistol mission",
                         "timeExpired": 15,
                         "timeIssued": 3
                     }
                 ]
-
+            },
+            {
+                "missions": [
+                    {
+                        "serialAgentsNumbers": [
+                            "007",
+                            "006"
+                        ],
+                        "duration": 7,
+                        "gadget": "pistol",
+                        "missionName": "pistol mission",
+                        "timeExpired": 15,
+                        "timeIssued": 3
+                    },
+                    {
+                        "serialAgentsNumbers": [
+                            "007",
+                            "006"
+                        ],
+                        "duration": 7,
+                        "gadget": "pistol",
+                        "missionName": "pistol mission",
+                        "timeExpired": 15,
+                        "timeIssued": 3
+                    },
+                    {
+                        "serialAgentsNumbers": [
+                            "007",
+                            "006"
+                        ],
+                        "duration": 7,
+                        "gadget": "pistol",
+                        "missionName": "pistol mission",
+                        "timeExpired": 15,
+                        "timeIssued": 3
+                    },
+                    {
+                        "serialAgentsNumbers": [
+                            "007",
+                            "006"
+                        ],
+                        "duration": 7,
+                        "gadget": "pistol",
+                        "missionName": "pistol mission",
+                        "timeExpired": 15,
+                        "timeIssued": 3
+                    }
+                ]
             },
             {
                 "missions": [

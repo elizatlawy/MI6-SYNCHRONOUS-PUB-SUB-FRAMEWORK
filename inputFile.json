@@ -41,7 +41,7 @@
                     {
                         "serialAgentsNumbers": ["006"],
                         "duration": 2,
-                        "gadget": "X-ray Glasses",
+                        "gadget": "X-ray glasses",
                         "missionName": "The World Is Not Enough",
                         "timeExpired": 100,
                         "timeIssued": 16

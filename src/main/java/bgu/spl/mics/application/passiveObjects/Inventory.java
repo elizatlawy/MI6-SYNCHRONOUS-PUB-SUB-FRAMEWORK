@@ -71,6 +71,7 @@ public class Inventory {
      */
     public void printToFile(String filename) {
         //TODO: Implement this
+        //String output = toString();
         LinkedList<String> gadgetsToPrint = new LinkedList<>(gadgets);
         Printer.Print(gadgetsToPrint,filename);
 
