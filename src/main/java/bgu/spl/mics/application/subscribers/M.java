@@ -31,6 +31,7 @@ public class M extends Subscriber {
     protected void initialize() {
         subscribeBroadcast(TickBroadcast.class, (brod) -> currTick = brod.getTick());
         subscribeEvent(MissionReceivedEvent.class, (ev) -> {
+            diary.incrementTotal();
             currMission = ev.getMission();
             // check first if we can still handle the mission in time
             System.out.println("M No:" + id + " is STARTING executing MissionReceivedEvent of: " + currMission.getMissionName() + " currtick: " + currTick);
@@ -70,7 +71,6 @@ public class M extends Subscriber {
                 System.out.println("M No:" + id + " is FINISHED executing MissionReceivedEvent of: " + currMission.getMissionName() + ": MISSION FAILED");
                 getSimplePublisher().sendEvent(new ReleaseAgentEvent(currMission.getSerialAgentsNumbers()));
             }
-            diary.incrementTotal();
         }); // end of lambda
     }
 }

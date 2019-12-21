@@ -109,7 +109,7 @@ public class MI6Runner {
             Intelligence intel = new Intelligence(i + 1);
             LinkedList<MissionInfo> MissionsToLoad = new LinkedList<>();
             for (JsonObject.JsonServices.JsonIntelligence.JsonMissions currMission : obj.services.intelligence[i].missions) {
-                MissionInfo mission = new MissionInfo(currMission.missionName, Arrays.asList(currMission.serialAgentsNumbers), currMission.gadget, currMission.timeIssued, currMission.timeExpired, currMission.duration);
+                MissionInfo mission = new MissionInfo(currMission.name, Arrays.asList(currMission.serialAgentsNumbers), currMission.gadget, currMission.timeIssued, currMission.timeExpired, currMission.duration);
                 MissionsToLoad.add(mission);
             }
             intel.load(MissionsToLoad);
