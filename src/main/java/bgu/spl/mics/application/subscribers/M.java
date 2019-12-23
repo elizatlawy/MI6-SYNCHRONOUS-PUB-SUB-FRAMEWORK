@@ -30,6 +30,7 @@ public class M extends Subscriber {
     @Override
     protected void initialize() {
         subscribeBroadcast(TickBroadcast.class, (brod) -> currTick = brod.getTick());
+        //TODO Make the code better looking with less if statements
         subscribeEvent(MissionReceivedEvent.class, (ev) -> {
             diary.incrementTotal();
             currMission = ev.getMission();
@@ -39,7 +40,7 @@ public class M extends Subscriber {
             Integer moneypennyID;
             Future<Integer> agentsAvailable = getSimplePublisher().sendEvent(new AgentsAvailableEvent(currMission.getSerialAgentsNumbers()));
             moneypennyID = agentsAvailable.get((currMission.getTimeExpired() - currTick) * 100, TimeUnit.MILLISECONDS);
-            if (moneypennyID != null) {
+            if (moneypennyID != null && moneypennyID > 0 ) {
                 Future<Integer> gadgetAvailable = getSimplePublisher().sendEvent(new GadgetAvailableEvent(currMission.getGadget()));
                 qtime = gadgetAvailable.get((currMission.getTimeExpired() - currTick) * 100, TimeUnit.MILLISECONDS);
             }
@@ -47,6 +48,7 @@ public class M extends Subscriber {
             if ((moneypennyID != null & qtime != null) && ((moneypennyID > 0) & qtime > 0) && (qtime < currMission.getTimeExpired())) {
                 Future<Boolean> missionComplete = getSimplePublisher().sendEvent(new SendAgentsEvent(currMission.getSerialAgentsNumbers(), currMission.getDuration()));
                 Future<List<String>> agentsNamesFuture = null;
+                // TODO test 2 fails because of missionComplete.get need to think how to fix this
                 if (missionComplete.get((currMission.getTimeExpired() - qtime) * 100, TimeUnit.MILLISECONDS) != null) {
                     agentsNamesFuture = getSimplePublisher().sendEvent(new GetAgentsNamesEvent(currMission.getSerialAgentsNumbers()));
                 }

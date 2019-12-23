@@ -48,7 +48,7 @@ public class Moneypenny extends Subscriber {
                     complete(ev, id);
                 else
                     complete(ev, -1);
-                System.out.println("Moneypenny No:" + id + " is FINISHED executing AgentsAvailableEvent of " + ev.getSerialAgentsNumbersNumber().toString());
+                System.out.println("Moneypenny No:" + id + " is FINISHED executing AgentsAvailableEvent of " + ev.getSerialAgentsNumbersNumber().toString()+ "The ANSWER is: " + isAgentsAvailable) ;
 
             });
             subscribeEvent(GetAgentsNamesEvent.class, (ev) -> {

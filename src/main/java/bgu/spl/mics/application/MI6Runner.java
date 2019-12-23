@@ -83,6 +83,8 @@ public class MI6Runner {
         // Todo: delete this before submission
         System.out.println("THE Diary: ");
         System.out.println(Diary.getInstance().toString());
+        System.out.println("THE Inventory: ");
+        System.out.println(Inventory.getInstance().toString());
     }
 
 
