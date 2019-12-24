@@ -1,6 +1,7 @@
 package bgu.spl.mics.application.passiveObjects;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -61,26 +62,10 @@ public class Diary {
      */
     public void printToFile(String filename) {
         // print number of received missions (total field)
-        Gson json = new Gson();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try{
             FileWriter writeToFile = new FileWriter(filename);
-            List<String> reportsToPrint = new LinkedList<>();
-            for (Report reportToPrint : reports){
-                String report = "{" +
-                        "missionName='" + reportToPrint.getMissionName() + '\n' +
-                        ", M=" + reportToPrint.getM() + '\n' +
-                        ", Moneypenny=" + reportToPrint.getMoneypenny() + '\n' +
-                        ", AgentsSerialNumbers=" + reportToPrint.getAgentsSerialNumbers() +  '\n' +
-                        ", agentsNames=" + reportToPrint.getAgentsNames() +  '\n' +
-                        ", gadgetName='" + reportToPrint.getGadgetName() + '\n' +
-                        ", qTime=" + reportToPrint.getQTime() +  '\n' +
-                        ", timeIssued=" + reportToPrint.getTimeIssued() +  '\n' +
-                        ", timeCreated=" + reportToPrint.getTimeCreated() +  '\n' +
-                        '}' + '\n';
-                reportsToPrint.add(report);
-            }
-            json.toJson(reportsToPrint,writeToFile);
-            json.toJson("total : " + total,writeToFile);
+            gson.toJson(Diary.getInstance() ,writeToFile);
             writeToFile.flush();
             writeToFile.close();
         } catch (IOException e) {
@@ -96,19 +81,10 @@ public class Diary {
 		return total.intValue();
 	}
 
-
 	/**
 	 * Increments the total number of received missions by 1
 	 */
 	public void incrementTotal() {
 		total.compareAndSet(total.intValue(),total.intValue()+1);
-	}
-	// TODO: delete - not allowed public methods
-	@Override
-	public String toString() {
-		return "Diary{" +
-				"reports= " + reports.toString() + '\n' +
-				", total= " + total +
-				'}';
 	}
 }

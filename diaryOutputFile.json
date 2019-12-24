@@ -1,1 +1,35 @@
-["{missionName\u003d\u0027null\n, M\u003d1\n, Moneypenny\u003d2\n, AgentsSerialNumbers\u003d[007, 006]\n, agentsNames\u003d[James Bond, Alec Trevelyan]\n, gadgetName\u003d\u0027Sky Hook\n, qTime\u003d3\n, timeIssued\u003d3\n, timeCreated\u003d3\n}\n","{missionName\u003d\u0027null\n, M\u003d1\n, Moneypenny\u003d2\n, AgentsSerialNumbers\u003d[006]\n, agentsNames\u003d[Alec Trevelyan]\n, gadgetName\u003d\u0027X-ray glasses\n, qTime\u003d16\n, timeIssued\u003d16\n, timeCreated\u003d16\n}\n"]"total : 5"
+{
+  "reports": [
+    {
+      "M": 2,
+      "Moneypenny": 2,
+      "AgentsSerialNumbers": [
+        "006",
+        "007"
+      ],
+      "agentsNames": [
+        "Alec Trevelyan",
+        "James Bond"
+      ],
+      "gadgetName": "Sky Hook",
+      "qTime": 3,
+      "timeIssued": 3,
+      "timeCreated": 3
+    },
+    {
+      "M": 1,
+      "Moneypenny": 2,
+      "AgentsSerialNumbers": [
+        "006"
+      ],
+      "agentsNames": [
+        "Alec Trevelyan"
+      ],
+      "gadgetName": "X-ray glasses",
+      "qTime": 16,
+      "timeIssued": 16,
+      "timeCreated": 16
+    }
+  ],
+  "total": 5
+}

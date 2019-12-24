@@ -25,6 +25,7 @@ import java.util.List;
 public class MI6Runner {
 
     public static void main(String[] args) {
+        // json parse
         try {
             // read the json
             String str = new String(Files.readAllBytes(Paths.get(args[0])));
@@ -43,7 +44,6 @@ public class MI6Runner {
             // printToFile
             Inventory.getInstance().printToFile(args[1]);
             Diary.getInstance().printToFile(args[2]);
-
 
         } catch (IOException e) {
             throw new RuntimeException("illegal json file");
@@ -76,9 +76,6 @@ public class MI6Runner {
             } catch (InterruptedException e) {
             }
         }
-        // Todo: Delete this before submission
-        System.out.println("THE Diary: ");
-        System.out.println(Diary.getInstance().toString());
     }
 
 
