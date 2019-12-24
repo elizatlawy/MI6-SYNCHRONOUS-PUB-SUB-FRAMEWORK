@@ -1,6 +1,7 @@
 package bgu.spl.mics;
 
 import bgu.spl.mics.application.messages.TerminateBroadcast;
+import bgu.spl.mics.application.subscribers.Moneypenny;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,11 +14,17 @@ import java.util.concurrent.LinkedBlockingDeque;
  * Only private fields and methods can be added to this class.
  */
 public class MessageBrokerImpl implements MessageBroker {
-    private ConcurrentHashMap<Class<? extends Message>, ConcurrentLinkedQueue<Subscriber>> mapOfSubscribers = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<Class<? extends Message>, ConcurrentLinkedQueue<Subscriber>> mapOfSubscribers ;
 
-    private ConcurrentHashMap<Subscriber, LinkedBlockingDeque<Message>> mapOfToDoMessages = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<Subscriber, LinkedBlockingDeque<Message>> mapOfToDoMessages;
 
-    private ConcurrentHashMap<Event, Future> mapOfevents = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<Event, Future> mapOfevents;
+
+    private MessageBrokerImpl() {
+        this.mapOfSubscribers =  new ConcurrentHashMap<>();
+        this.mapOfToDoMessages = new ConcurrentHashMap<>();
+        this.mapOfevents = new ConcurrentHashMap<>();
+    }
 
     private static class MessageBrokerHolder {
         private static MessageBroker instance = new MessageBrokerImpl();
@@ -43,7 +50,7 @@ public class MessageBrokerImpl implements MessageBroker {
     }
 
     private void subscribe(Class<? extends Message> type, Subscriber m) {
-        if(type != null && m != null){
+        if (type != null && m != null) {
             synchronized (type) {
                 mapOfSubscribers.putIfAbsent(type, new ConcurrentLinkedQueue<>());
                 ConcurrentLinkedQueue<Subscriber> toAddQ = mapOfSubscribers.get(type);
@@ -55,9 +62,11 @@ public class MessageBrokerImpl implements MessageBroker {
 
     @Override
     public <T> void complete(Event<T> e, T result) {
-        Future<T> future = mapOfevents.get(e);
-        if (future != null)
-            future.resolve(result);
+        if (e != null & result != null) {
+            Future<T> future = mapOfevents.get(e);
+            if (future != null)
+                future.resolve(result);
+        }
     }
 
     @Override
@@ -65,13 +74,15 @@ public class MessageBrokerImpl implements MessageBroker {
         if (mapOfSubscribers.containsKey(b.getClass())) {
             synchronized (mapOfSubscribers.get(b.getClass())) {
                 ConcurrentLinkedQueue<Subscriber> subscribersOfCurrBroadcast = mapOfSubscribers.get(b.getClass());
-                if(subscribersOfCurrBroadcast != null && !subscribersOfCurrBroadcast.isEmpty()){
+                if (subscribersOfCurrBroadcast != null && !subscribersOfCurrBroadcast.isEmpty()) {
                     for (Subscriber currSubscriber : subscribersOfCurrBroadcast)
-                        if(b instanceof TerminateBroadcast){
-                           mapOfToDoMessages.get (currSubscriber).addFirst(b);
+                        if (currSubscriber != null) {
+                            // if it is a TerminateBroadcast we want to execute it first
+                            if (b instanceof TerminateBroadcast) {
+                                mapOfToDoMessages.get(currSubscriber).addFirst(b);
+                            } else
+                                mapOfToDoMessages.get(currSubscriber).add(b);
                         }
-                        else if (currSubscriber != null)
-                            mapOfToDoMessages.get(currSubscriber).add(b);
                 }
             }
         }
@@ -79,12 +90,12 @@ public class MessageBrokerImpl implements MessageBroker {
 
     @Override
     public <T> Future<T> sendEvent(Event<T> e) {
-        Future future;
+        Future future = null;
         Subscriber currSubscriber = null;
         boolean problem;
-        do{
+        do {
             problem = false;
-            if(mapOfSubscribers.containsKey(e.getClass())){
+            if (mapOfSubscribers.containsKey(e.getClass())) {
                 future = new Future();
                 mapOfevents.put(e, future);
                 synchronized (mapOfSubscribers.get(e.getClass())) { // lock the queue of this event class
@@ -104,40 +115,34 @@ public class MessageBrokerImpl implements MessageBroker {
                         }
                     }
                 }
-                else {
-                    future = null;
-                }
-            }
-            else{
-                future = null;
             }
         }
-        while(problem);
+        while (problem);
         return future;
     }
 
     @Override
     public void register(Subscriber m) {
-        if( m != null)
+        if (m != null)
             mapOfToDoMessages.putIfAbsent(m, new LinkedBlockingDeque<>());
     }
 
     @Override
     public void unregister(Subscriber m) {
-        if( m != null){
+        if (m != null) {
             LinkedBlockingDeque<Message> toDeleteQ = mapOfToDoMessages.get(m);
             // resolve all m toDoMessages to null
-            if(toDeleteQ != null && !toDeleteQ.isEmpty()){
-                for(Message currMessage : toDeleteQ)
-                    if( currMessage  instanceof Event)
-                        complete((Event)currMessage, null);
+            if (toDeleteQ != null && !toDeleteQ.isEmpty()) {
+                for (Message currMessage : toDeleteQ)
+                    if (currMessage instanceof Event)
+                        complete((Event) currMessage, null);
             }
             // remove the queue of m from the toDoMessages
             mapOfToDoMessages.remove(m);
             // unsubscribe m for all the events & broadcasts he was subscribed to
-            for(Class<? extends Message> currMessage : mapOfSubscribers.keySet()){
+            for (Class<? extends Message> currMessage : mapOfSubscribers.keySet()) {
                 ConcurrentLinkedQueue<Subscriber> currMessageQ = mapOfSubscribers.get(currMessage);
-                synchronized (currMessageQ){
+                synchronized (currMessageQ) {
                     currMessageQ.remove(m);
                 }
             }

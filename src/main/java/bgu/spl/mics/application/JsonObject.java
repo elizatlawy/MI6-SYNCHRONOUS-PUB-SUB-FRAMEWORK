@@ -18,7 +18,7 @@ public class JsonObject {
                 String[] serialAgentsNumbers;
                 int duration;
                 String gadget;
-                String missionName;
+                String name;
                 int timeExpired;
                 int timeIssued;
             }

@@ -3,11 +3,18 @@
         "Sky Hook",
         "Geiger counter",
         "X-ray glasses",
-        "Dagger shoe"
+        "Dagger shoe",
+        "pistol",
+        "elicopter",
+        "knife",
+        "baloon",
+        "tv"
+
+
     ],
     "services": {
-        "M": 2,
-        "Moneypenny": 2,
+        "M": 100,
+        "Moneypenny": 100,
         "intelligence": [
             {
                 "missions": [
@@ -41,10 +48,18 @@
                     {
                         "serialAgentsNumbers": ["006"],
                         "duration": 2,
-                        "gadget": "X-ray Glasses",
+                        "gadget": "X-ray glasses",
                         "missionName": "The World Is Not Enough",
                         "timeExpired": 100,
                         "timeIssued": 16
+                    },
+                    {
+                        "serialAgentsNumbers": ["009", "010"],
+                        "duration": 5,
+                        "gadget": "tv",
+                        "missionName": "tv mission",
+                        "timeExpired": 100,
+                        "timeIssued": 25
                     }
                 ]
             },
@@ -56,15 +71,139 @@
                             "006"
                         ],
                         "duration": 7,
-                        "gadget": "Sky Hook",
-                        "missionName": "Thunderball",
+                        "gadget": "pistol",
+                        "missionName": "pistol mission",
                         "timeExpired": 15,
                         "timeIssued": 3
                     }
                 ]
+            },
+            {
+                "missions": [
+                    {
+                        "serialAgentsNumbers": [
+                            "007",
+                            "006"
+                        ],
+                        "duration": 7,
+                        "gadget": "pistol",
+                        "missionName": "pistol mission",
+                        "timeExpired": 15,
+                        "timeIssued": 3
+                    },
+                    {
+                        "serialAgentsNumbers": [
+                            "007",
+                            "006"
+                        ],
+                        "duration": 7,
+                        "gadget": "pistol",
+                        "missionName": "pistol mission",
+                        "timeExpired": 15,
+                        "timeIssued": 3
+                    },
+                    {
+                        "serialAgentsNumbers": [
+                            "007",
+                            "006"
+                        ],
+                        "duration": 7,
+                        "gadget": "pistol",
+                        "missionName": "pistol mission",
+                        "timeExpired": 15,
+                        "timeIssued": 3
+                    },
+                    {
+                        "serialAgentsNumbers": [
+                            "007",
+                            "006"
+                        ],
+                        "duration": 7,
+                        "gadget": "pistol",
+                        "missionName": "pistol mission",
+                        "timeExpired": 15,
+                        "timeIssued": 3
+                    }
+                ]
+            },
+            {
+                "missions": [
+                    {
+                        "serialAgentsNumbers": [
+                            "008",
+                            "006"
+                        ],
+                        "duration": 5,
+                        "gadget": "knife",
+                        "missionName": "test Mission 1 of intel 3",
+                        "timeExpired": 15,
+                        "timeIssued": 5
+                    },
+                    {
+                        "serialAgentsNumbers": [
+                            "007",
+                            "006",
+                            "008",
+                            "009",
+                            "010",
+                            "011"
+                        ],
+                        "duration": 15,
+                        "gadget": "baloon",
+                        "missionName": "All agents Mission",
+                        "timeExpired": 30,
+                        "timeIssued": 10
+                    },
+                    {
+                        "serialAgentsNumbers": [
+                            "007",
+                            "006",
+                            "008",
+                            "009",
+                            "010",
+                            "011"
+                        ],
+                        "duration": 15,
+                        "gadget": "elicopter",
+                        "missionName": "All agents Mission 2",
+                        "timeExpired": 30,
+                        "timeIssued": 12
+                    },
+                    {
+                        "serialAgentsNumbers": [
+                            "007",
+                            "006",
+                            "008",
+                            "009",
+                            "010",
+                            "012"
+                        ],
+                        "duration": 15,
+                        "gadget": "elicopter",
+                        "missionName": "Missing agents Mission",
+                        "timeExpired": 30,
+                        "timeIssued": 12
+                    },
+                    {
+                        "serialAgentsNumbers": [
+                            "007",
+                            "006",
+                            "008",
+                            "009",
+                            "010",
+                            "012"
+                        ],
+                        "duration": 15,
+                        "gadget": "elicopter",
+                        "missionName": "Mission with time timeIssued 30",
+                        "timeExpired": 120,
+                        "timeIssued": 30
+                    }
+                ]
+                
             }
         ],
-        "time": 25
+        "time": 50
     },
     "squad": [
         {
@@ -74,6 +213,22 @@
         {
             "name": "Alec Trevelyan",
             "serialNumber": "006"
+        },
+        {
+            "name": "Nadav",
+            "serialNumber": "008"
+        },
+         {
+            "name": "Yossi",
+            "serialNumber": "009"
+        },
+        {
+            "name": "Gil",
+            "serialNumber": "010"
+        },
+        {
+            "name": "Iris",
+            "serialNumber": "011"
         }
     ]
 }

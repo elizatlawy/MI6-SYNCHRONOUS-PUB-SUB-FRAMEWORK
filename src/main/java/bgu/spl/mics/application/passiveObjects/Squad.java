@@ -16,13 +16,6 @@ public class Squad {
 
     private Map<String, Agent> agents;
 
-    public boolean isAllReleased() {
-        for (Agent agent : agents.values())
-            if (!agent.isAvailable())
-                return false;
-        return true;
-    }
-
     private static class SquadHolder {
         private static Squad instance = new Squad();
     }
@@ -54,9 +47,13 @@ public class Squad {
      * Releases agents.
      */
     public void releaseAgents(List<String> serials) {
-        for (String serialNumber : serials) {
-            agents.get(serialNumber).release();
-            System.out.println("###################################### released1111: " + serialNumber);
+        if (serials != null) {
+            for (String serialNumber : serials) {
+                if (agents.get(serialNumber) != null) {
+                    agents.get(serialNumber).release();
+                    System.out.println("###################################### releaseAgents: " + serialNumber);
+                }
+            }
         }
     }
 
@@ -72,7 +69,7 @@ public class Squad {
         }
         for (String serialNumber : serials) {
             agents.get(serialNumber).release();
-            System.out.println("###################################### released22222: " + serialNumber);
+            System.out.println("###################################### sendAgents: " + serialNumber);
         }
     }
 
@@ -109,6 +106,7 @@ public class Squad {
                             currAgent.wait(); // waiting for currAgent to become available
                             break; // break the for loop
                         } catch (InterruptedException e) {
+                            return false;
                         }
 
                     }
