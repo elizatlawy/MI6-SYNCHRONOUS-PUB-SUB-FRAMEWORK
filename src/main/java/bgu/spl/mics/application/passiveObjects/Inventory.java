@@ -1,7 +1,9 @@
 package bgu.spl.mics.application.passiveObjects;
 
-import bgu.spl.mics.Printer;
+import com.google.gson.Gson;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -70,19 +72,14 @@ public class Inventory {
      * This method is called by the main method in order to generate the output.
      */
     public void printToFile(String filename) {
-        //TODO: Implement this
-        //String output = toString();
-        LinkedList<String> gadgetsToPrint = new LinkedList<>(gadgets);
-        Printer.Print(gadgetsToPrint,filename);
-
-    }
-
-    @Override
-    public String toString() {
-        String output = "[";
-        for (String currGadget : gadgets)
-            output = output + "\"" + currGadget + "\"" + ",";
-        output = output.substring(0, output.length() - 1) + "]";
-        return output;
+       Gson json = new Gson();
+       try{
+           FileWriter writeToFile = new FileWriter(filename);
+           json.toJson(gadgets,writeToFile);
+           writeToFile.flush();
+           writeToFile.close();
+       } catch (IOException e) {
+           System.out.println("File problem is " + e.getMessage());
+       }
     }
 }

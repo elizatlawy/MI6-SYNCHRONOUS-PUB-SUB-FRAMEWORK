@@ -1,7 +1,9 @@
 package bgu.spl.mics.application.passiveObjects;
 
-import bgu.spl.mics.Printer;
+import com.google.gson.Gson;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -59,12 +61,31 @@ public class Diary {
      */
     public void printToFile(String filename) {
         // print number of received missions (total field)
-        Printer.Print(total,filename);
-        // print reports
-        LinkedList<Report> reportsToPrint = new LinkedList<>(reports);
-        Printer.Print(reportsToPrint,filename);
-
-        //TODO: Implement this
+        Gson json = new Gson();
+        try{
+            FileWriter writeToFile = new FileWriter(filename);
+            List<String> reportsToPrint = new LinkedList<>();
+            for (Report reportToPrint : reports){
+                String report = "{" +
+                        "missionName='" + reportToPrint.getMissionName() + '\n' +
+                        ", M=" + reportToPrint.getM() + '\n' +
+                        ", Moneypenny=" + reportToPrint.getMoneypenny() + '\n' +
+                        ", AgentsSerialNumbers=" + reportToPrint.getAgentsSerialNumbers() +  '\n' +
+                        ", agentsNames=" + reportToPrint.getAgentsNames() +  '\n' +
+                        ", gadgetName='" + reportToPrint.getGadgetName() + '\n' +
+                        ", qTime=" + reportToPrint.getQTime() +  '\n' +
+                        ", timeIssued=" + reportToPrint.getTimeIssued() +  '\n' +
+                        ", timeCreated=" + reportToPrint.getTimeCreated() +  '\n' +
+                        '}' + '\n';
+                reportsToPrint.add(report);
+            }
+            json.toJson(reportsToPrint,writeToFile);
+            json.toJson("total : " + total,writeToFile);
+            writeToFile.flush();
+            writeToFile.close();
+        } catch (IOException e) {
+            System.out.println("File problem is " + e.getMessage());
+        }
     }
 
 	/**

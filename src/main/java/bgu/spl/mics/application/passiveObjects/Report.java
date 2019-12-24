@@ -164,7 +164,7 @@ public class Report {
 
     @Override
     public String toString() {
-        return "Report{" +
+        return "{" +
                 "missionName='" + missionName + '\'' +
                 ", M=" + M +
                 ", Moneypenny=" + Moneypenny +

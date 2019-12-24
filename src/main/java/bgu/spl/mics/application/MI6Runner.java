@@ -1,6 +1,5 @@
 package bgu.spl.mics.application;
 
-import bgu.spl.mics.Printer;
 import bgu.spl.mics.Subscriber;
 import bgu.spl.mics.application.passiveObjects.*;
 import bgu.spl.mics.application.subscribers.Intelligence;
@@ -40,13 +39,10 @@ public class MI6Runner {
             TimeService timeService = TimeService.getInstance();
             timeService.setDuration(duration);
             // run threads
-            // run
-            Squad squad = Squad.getInstance();
-            Inventory inventory = Inventory.getInstance();
             executeThreads(subscribers);
             // printToFile
-//            inventory.printToFile(args[1]);
-//            Diary.getInstance().printToFile(args[2]);
+            Inventory.getInstance().printToFile(args[1]);
+            Diary.getInstance().printToFile(args[2]);
 
 
         } catch (IOException e) {
@@ -80,11 +76,9 @@ public class MI6Runner {
             } catch (InterruptedException e) {
             }
         }
-        // Todo: delete this before submission
+        // Todo: Delete this before submission
         System.out.println("THE Diary: ");
         System.out.println(Diary.getInstance().toString());
-        System.out.println("THE Inventory: ");
-        System.out.println(Inventory.getInstance().toString());
     }
 
 
