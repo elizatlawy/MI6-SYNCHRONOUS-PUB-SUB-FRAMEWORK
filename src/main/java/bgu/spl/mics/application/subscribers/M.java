@@ -40,18 +40,17 @@ public class M extends Subscriber {
             Integer moneypennyID;
             Future<Integer> agentsAvailable = getSimplePublisher().sendEvent(new AgentsAvailableEvent(currMission.getSerialAgentsNumbers()));
             moneypennyID = agentsAvailable.get((currMission.getTimeExpired() - currTick) * 100, TimeUnit.MILLISECONDS);
+            Future<List<String>> agentsNamesFuture = null;
             if (moneypennyID != null && moneypennyID > 0 ) {
                 Future<Integer> gadgetAvailable = getSimplePublisher().sendEvent(new GadgetAvailableEvent(currMission.getGadget()));
                 qtime = gadgetAvailable.get((currMission.getTimeExpired() - currTick) * 100, TimeUnit.MILLISECONDS);
             }
             // check if can execute mission
             if ((moneypennyID != null & qtime != null) && ((moneypennyID > 0) & qtime > 0) && (qtime < currMission.getTimeExpired())) {
+                agentsNamesFuture = getSimplePublisher().sendEvent(new GetAgentsNamesEvent(currMission.getSerialAgentsNumbers()));
                 Future<Boolean> missionComplete = getSimplePublisher().sendEvent(new SendAgentsEvent(currMission.getSerialAgentsNumbers(), currMission.getDuration()));
-                Future<List<String>> agentsNamesFuture = null;
-                // TODO test 2 fails because of missionComplete.get need to think how to fix this
-                if (missionComplete.get((currMission.getTimeExpired() - qtime) * 100, TimeUnit.MILLISECONDS) != null) {
-                    agentsNamesFuture = getSimplePublisher().sendEvent(new GetAgentsNamesEvent(currMission.getSerialAgentsNumbers()));
-                }
+//                if (missionComplete.get((currMission.getTimeExpired() - qtime) * 100, TimeUnit.MILLISECONDS) != null) {
+//                }
 
                 if ((agentsNamesFuture != null) && agentsNamesFuture.get((currMission.getTimeExpired() - qtime) * 100, TimeUnit.MILLISECONDS) != null) {
                     // the mission finished, can write the report

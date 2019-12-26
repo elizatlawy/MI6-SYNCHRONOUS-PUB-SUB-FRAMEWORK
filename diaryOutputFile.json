@@ -1,6 +1,7 @@
 {
   "reports": [
     {
+      "missionName": "Thunderball",
       "M": 2,
       "Moneypenny": 2,
       "AgentsSerialNumbers": [
@@ -17,6 +18,7 @@
       "timeCreated": 3
     },
     {
+      "missionName": "The World Is Not Enough",
       "M": 1,
       "Moneypenny": 2,
       "AgentsSerialNumbers": [
