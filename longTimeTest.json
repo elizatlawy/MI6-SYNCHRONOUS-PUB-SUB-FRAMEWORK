@@ -1,0 +1,213 @@
+{
+  "inventory": [
+      "Mission1Tool",
+      "Mission2Tool",
+      "Mission3Tool",
+      "Mission4Tool",
+      "Mission5Tool",
+      "Mission6Tool",
+      "Mission7Tool",
+      "Mission8Tool"
+  ],
+  "services": {
+    "M": 4,
+    "Moneypenny": 4,
+    "intelligence": [
+      {
+        "missions": [
+          {
+            "serialAgentsNumbers": [
+              "001",
+              "002",
+              "003"
+            ],
+            "duration": 3,
+            "gadget": "Mission1Tool",
+            "name": "Mission1",
+            "timeExpired": 100,
+            "timeIssued": 1
+          },
+          {
+            "serialAgentsNumbers": [
+              "003",
+              "002",
+              "001"
+            ],
+            "duration": 3,
+            "gadget": "Mission2Tool",
+            "name": "Mission2",
+            "timeExpired": 100,
+            "timeIssued": 4
+          },
+          {
+            "serialAgentsNumbers": [
+              "002",
+              "001",
+              "003"
+            ],
+            "duration": 3,
+            "gadget": "Mission3Tool",
+            "name": "Mission3",
+            "timeExpired": 100,
+            "timeIssued": 7
+          },
+          {
+            "serialAgentsNumbers": [
+              "002",
+              "001",
+              "003"
+            ],
+            "duration": 3,
+            "gadget": "Mission1Tool",
+            "name": "Mission4",
+            "timeExpired": 100,
+            "timeIssued": 10
+          },
+          {
+            "serialAgentsNumbers": [
+              "001",
+              "002",
+              "003"
+            ],
+            "duration": 3,
+            "gadget": "Mission1Tool",
+            "name": "Mission1",
+            "timeExpired": 100,
+            "timeIssued": 13
+          },
+          {
+            "serialAgentsNumbers": [
+              "003",
+              "002",
+              "001"
+            ],
+            "duration": 3,
+            "gadget": "Mission2Tool",
+            "name": "Mission2",
+            "timeExpired": 100,
+            "timeIssued": 16
+          },
+          {
+            "serialAgentsNumbers": [
+              "002",
+              "001",
+              "003"
+            ],
+            "duration": 3,
+            "gadget": "Mission3Tool",
+            "name": "Mission3",
+            "timeExpired": 100,
+            "timeIssued": 19
+          },
+          {
+            "serialAgentsNumbers": [
+              "002",
+              "001",
+              "003"
+            ],
+            "duration": 3,
+            "gadget": "Mission1Tool",
+            "name": "Mission4",
+            "timeExpired": 100,
+            "timeIssued": 22
+          },
+          {
+            "serialAgentsNumbers": [
+              "001",
+              "002",
+              "003"
+            ],
+            "duration": 3,
+            "gadget": "Mission1Tool",
+            "name": "Mission1",
+            "timeExpired": 100,
+            "timeIssued": 25
+          },
+          {
+            "serialAgentsNumbers": [
+              "003",
+              "002",
+              "001"
+            ],
+            "duration": 3,
+            "gadget": "Mission2Tool",
+            "name": "Mission2",
+            "timeExpired": 100,
+            "timeIssued": 28
+          },
+          {
+            "serialAgentsNumbers": [
+              "002",
+              "001",
+              "003"
+            ],
+            "duration": 3,
+            "gadget": "Mission3Tool",
+            "name": "Mission3",
+            "timeExpired": 100,
+            "timeIssued": 31
+          },
+          {
+            "serialAgentsNumbers": [
+              "002",
+              "001",
+              "003"
+            ],
+            "duration": 3,
+            "gadget": "Mission1Tool",
+            "name": "Mission4",
+            "timeExpired": 100,
+            "timeIssued": 34
+          }
+        ]
+      },
+      {
+        "missions": [
+          {
+            "serialAgentsNumbers": [
+              "003",
+              "001",
+              "002"
+            ],
+            "duration": 3,
+            "gadget": "Mission7Tool",
+            "name": "lastMission-1",
+            "timeExpired": 100,
+            "timeIssued": 37
+          },
+          {
+            "serialAgentsNumbers": [
+              "002"
+            ],
+            "duration": 3,
+            "gadget": "Mission8Tool",
+            "name": "lastMission",
+            "timeExpired": 100,
+            "timeIssued": 40
+          }
+        ]
+      }
+    ],
+    "time": 41
+  },
+  "squad": [
+    {
+      "name": "AGENT001",
+      "serialNumber": "001"
+    },
+    {
+      "name": "AGENT002",
+      "serialNumber": "002"
+    },
+    {
+      "name": "AGENT003",
+      "serialNumber": "003"
+    },
+    {
+      "name": "AGENT004",
+      "serialNumber": "004"
+    }
+
+  ]
+
+}

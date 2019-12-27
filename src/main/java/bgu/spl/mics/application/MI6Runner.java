@@ -46,7 +46,7 @@ public class MI6Runner {
             Diary.getInstance().printToFile(args[2]);
 
         } catch (IOException e) {
-            throw new RuntimeException("illegal json file");
+            throw new RuntimeException("IOException");
         }
     }
 
@@ -59,7 +59,7 @@ public class MI6Runner {
             thread.start();
         }
         try {
-            Thread.sleep(10);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -69,7 +69,7 @@ public class MI6Runner {
         for (int i = 0; i < threads.size(); i++) {
             Thread t = threads.get(i);
             try {
-                System.out.println("terminating: " + t.getName());
+                //System.out.println("terminating: " + t.getName());
                 t.join();
                 if (i < threads.size() - 1)
                     System.out.println("terminated: " + t.getName() + " NEXT to terminate: " + threads.get(i + 1));

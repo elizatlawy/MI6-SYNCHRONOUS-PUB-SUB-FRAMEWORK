@@ -30,11 +30,9 @@ public class M extends Subscriber {
     @Override
     protected void initialize() {
         subscribeBroadcast(TickBroadcast.class, (brod) -> currTick = brod.getTick());
-        //TODO Make the code better looking with less if statements
         subscribeEvent(MissionReceivedEvent.class, (ev) -> {
             diary.incrementTotal();
             currMission = ev.getMission();
-            // check first if we can still handle the mission in time
             System.out.println("M No:" + id + " is STARTING executing MissionReceivedEvent of: " + currMission.getMissionName() + " currtick: " + currTick);
             Integer qtime = -1;
             Integer moneypennyID;
@@ -48,12 +46,9 @@ public class M extends Subscriber {
             // check if can execute mission
             if ((moneypennyID != null & qtime != null) && ((moneypennyID > 0) & qtime > 0) && (qtime < currMission.getTimeExpired())) {
                 agentsNamesFuture = getSimplePublisher().sendEvent(new GetAgentsNamesEvent(currMission.getSerialAgentsNumbers()));
-                Future<Boolean> missionComplete = getSimplePublisher().sendEvent(new SendAgentsEvent(currMission.getSerialAgentsNumbers(), currMission.getDuration()));
-//                if (missionComplete.get((currMission.getTimeExpired() - qtime) * 100, TimeUnit.MILLISECONDS) != null) {
-//                }
-
+                getSimplePublisher().sendEvent(new SendAgentsEvent(currMission.getSerialAgentsNumbers(), currMission.getDuration()));
                 if ((agentsNamesFuture != null) && agentsNamesFuture.get((currMission.getTimeExpired() - qtime) * 100, TimeUnit.MILLISECONDS) != null) {
-                    // the mission finished, can write the report
+                    // write the report
                     Report missionReport = new Report(qtime);
                     missionReport.setMissionName(currMission.getMissionName());
                     missionReport.setM(id);

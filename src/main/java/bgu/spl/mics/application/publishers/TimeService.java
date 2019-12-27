@@ -51,6 +51,7 @@ public class TimeService extends Publisher {
 				Thread.sleep(speed);
 				tick++;
 			} catch (InterruptedException e) {}
+
 		}
 		getSimplePublisher().sendBroadcast(new TerminateBroadcast());
 	}

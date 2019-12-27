@@ -1,0 +1,6 @@
+roundRobinTest- tests the round robin. expected output: only 1 M and 1 MoneyPenny doing 2 Missions.
+deadLockTest- tests if deadlock accure when all the missions requied the same agents. expected output: all missions, except mission 4, are executed.
+qAndMpTerminatedAfterM- tests if q and all the moneypennys terminate only after all the Ms are terminated. expected output: program dont get stuck+ all missions executed.
+longTimeTest- running the program for a long time (40 ticks). output expected: total - 14.
+ 
+

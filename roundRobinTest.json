@@ -1,0 +1,93 @@
+{
+    "inventory": [ 
+        "tool1",
+        "tool2",
+        "tool3",
+        "tool4",
+	"tool5",
+	"tool6"
+    ],
+    "services": {
+        "M": 5,
+        "Moneypenny": 5,
+        "intelligence": [
+            {
+                "missions": [
+                    {
+                        "serialAgentsNumbers": [
+                            "006",
+                        ],
+                        "duration": 1,
+                        "gadget": "tool1",
+                        "missionName": "Mission1",
+                        "timeExpired": 15,
+                        "timeIssued": 1
+                    }
+                    {
+                        "serialAgentsNumbers": [
+                            "007"
+                        ],
+                        "duration": 1,
+                        "gadget": "tool2",
+                        "missionName": "mission2",
+                        "timeExpired": 15,
+                        "timeIssued": 2
+                    }
+                    {
+                        "serialAgentsNumbers": [
+                            "006"
+                        ],
+                        "duration": 1,
+                        "gadget": "tool3",
+                        "missionName": "mission3",
+                        "timeExpired": 15,
+                        "timeIssued": 3
+                    }
+                   {
+                        "serialAgentsNumbers": [
+                            "007"
+                        ],
+                        "duration": 1,
+                        "gadget": "tool4",
+                        "missionName": "mission4",
+                        "timeExpired": 15,
+                        "timeIssued": 4
+                    }
+                   {
+                        "serialAgentsNumbers": [
+                            "006"
+                        ],
+                        "duration": 1,
+                        "gadget": "tool5",
+                        "missionName": "mission5",
+                        "timeExpired": 15,
+                        "timeIssued": 5
+                    }
+                   {
+                        "serialAgentsNumbers": [
+                            "007"
+                        ],
+                        "duration": 1,
+                        "gadget": "tool6",
+                        "missionName": "mission6",
+                        "timeExpired": 15,
+                        "timeIssued": 6
+                    }
+
+                ]
+            }
+
+        ],
+        "time": 10
+    },
+    "squad": [
+        {
+            "name": "James Bond",
+            "serialNumber": "007"
+        },
+        {
+            "name": "Alec Trevelyan",
+            "serialNumber": "006"
+        }
+    ]
+}
