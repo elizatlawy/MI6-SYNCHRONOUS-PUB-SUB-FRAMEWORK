@@ -48,17 +48,7 @@ public class M extends Subscriber {
                 getSimplePublisher().sendEvent(new SendAgentsEvent(currMission.getSerialAgentsNumbers(), currMission.getDuration()));
                 if ((agentsNamesFuture != null) && agentsNamesFuture.get((currMission.getTimeExpired() - qtime) * 100, TimeUnit.MILLISECONDS) != null) {
                     // write the report
-                    Report missionReport = new Report(qtime);
-                    missionReport.setMissionName(currMission.getMissionName());
-                    missionReport.setM(id);
-                    missionReport.setMoneypenny(moneypennyID);
-                    missionReport.setAgentsSerialNumbers(currMission.getSerialAgentsNumbers());
-                    missionReport.setAgentsNames(agentsNamesFuture.get());
-                    missionReport.setGadgetName(currMission.getGadget());
-                    missionReport.setQTime(qtime);
-                    missionReport.setTimeIssued(currMission.getTimeIssued());
-                    diary.addReport(missionReport);
-                    System.out.println("M No:" + id + " is FINISHED executing MissionReceivedEvent of: " + currMission.getMissionName() + ": MISSION SUCCEEDED");
+                    addReport(qtime,moneypennyID,agentsNamesFuture.get());
                 }
             }
             // time is expired -> Mission abort
@@ -68,4 +58,27 @@ public class M extends Subscriber {
             }
         }); // end of lambda
     }
+
+    /**
+     * add new report to the diary
+     * @param qtime the time-tick in which Q Received the GadgetAvailableEvent for that mission
+     * @param moneypennyID the Moneypenny instance who calls squad.getAgents()
+     * @param agentsNames the list of the agentsNames that sent to the mission
+     */
+
+    private void addReport(int qtime, int moneypennyID,  List<String> agentsNames){
+        Report missionReport = new Report(qtime);
+        missionReport.setMissionName(currMission.getMissionName());
+        missionReport.setM(id);
+        missionReport.setMoneypenny(moneypennyID);
+        missionReport.setAgentsSerialNumbers(currMission.getSerialAgentsNumbers());
+        missionReport.setAgentsNames(agentsNames);
+        missionReport.setGadgetName(currMission.getGadget());
+        missionReport.setQTime(qtime);
+        missionReport.setTimeIssued(currMission.getTimeIssued());
+        diary.addReport(missionReport);
+        System.out.println("M No:" + id + " is FINISHED executing MissionReceivedEvent of: " + currMission.getMissionName() + ": MISSION SUCCEEDED");
+    }
 }
+
+
