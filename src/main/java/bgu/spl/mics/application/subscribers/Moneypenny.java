@@ -26,21 +26,21 @@ public class Moneypenny extends Subscriber {
         //assign the SendAgentsEvent & ReleaseAgentEvent only to half of the MoneyPenny with odd ID, the even ID MoneyPenny will handle the AgentsAvailableEvent
         if (id % 2 == 1) {
             subscribeEvent(SendAgentsEvent.class, (ev) -> {
-                System.out.println("Moneypenny No:" + id + " is STARTING executing SendAgentsEvent " + ev.getSerialAgentsNumbers().toString());
+                //System.out.println("Moneypenny No:" + id + " is STARTING executing SendAgentsEvent " + ev.getSerialAgentsNumbers().toString());
                 squad.sendAgents(ev.getSerialAgentsNumbers(), ev.getDuration());
                 complete(ev, true);
-                System.out.println("Moneypenny No:" + id + " is FINISHED  executing SendAgentsEvent " + ev.getSerialAgentsNumbers().toString());
+                //System.out.println("Moneypenny No:" + id + " is FINISHED  executing SendAgentsEvent " + ev.getSerialAgentsNumbers().toString());
             });
 
             subscribeEvent(ReleaseAgentEvent.class, (ev) -> {
-                System.out.println("Moneypenny No:" + id + " is STARTING executing ReleaseAgentEvent " + ev.getAgentsSerialNumbers().toString());
+                //System.out.println("Moneypenny No:" + id + " is STARTING executing ReleaseAgentEvent " + ev.getAgentsSerialNumbers().toString());
                 squad.releaseAgents(ev.getAgentsSerialNumbers());
                 complete(ev, true);
-                System.out.println("Moneypenny No:" + id + " is FINISHED executing ReleaseAgentEvent " + ev.getAgentsSerialNumbers().toString());
+                //System.out.println("Moneypenny No:" + id + " is FINISHED executing ReleaseAgentEvent " + ev.getAgentsSerialNumbers().toString());
             });
         } else {
             subscribeEvent(AgentsAvailableEvent.class, (ev) -> {
-                System.out.println("Moneypenny No:" + id + " is STARTING executing AgentsAvailableEvent of " + ev.getSerialAgentsNumbersNumber().toString());
+                //System.out.println("Moneypenny No:" + id + " is STARTING executing AgentsAvailableEvent of " + ev.getSerialAgentsNumbersNumber().toString());
                 boolean isAgentsAvailable = squad.getAgents(ev.getSerialAgentsNumbersNumber());
 
                 // if the agents available -> returns Moneypenny id, else returns -1
@@ -48,7 +48,7 @@ public class Moneypenny extends Subscriber {
                     complete(ev, id);
                 else
                     complete(ev, -1);
-                System.out.println("Moneypenny No:" + id + " is FINISHED executing AgentsAvailableEvent of " + ev.getSerialAgentsNumbersNumber().toString()+ "The ANSWER is: " + isAgentsAvailable) ;
+                //System.out.println("Moneypenny No:" + id + " is FINISHED executing AgentsAvailableEvent of " + ev.getSerialAgentsNumbersNumber().toString()+ "The ANSWER is: " + isAgentsAvailable) ;
 
             });
             subscribeEvent(GetAgentsNamesEvent.class, (ev) -> {

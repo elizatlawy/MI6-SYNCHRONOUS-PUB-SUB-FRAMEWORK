@@ -46,7 +46,7 @@ public class TimeService extends Publisher {
 	public void run() {
 		while (tick <= duration){
 			getSimplePublisher().sendBroadcast(new TickBroadcast(tick, duration));
-			System.out.println(tick);
+			//System.out.println(tick);
 			try {
 				Thread.sleep(speed);
 				tick++;

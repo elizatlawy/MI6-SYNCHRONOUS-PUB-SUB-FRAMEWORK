@@ -25,13 +25,13 @@ public class Q extends Subscriber {
     protected void initialize() {
         subscribeBroadcast(TickBroadcast.class, (brod) -> currTick = brod.getTick());
         subscribeEvent(GadgetAvailableEvent.class, (ev) -> {
-            System.out.println("Q is STARTING executing GadgetAvailableEvent of: " + ev.getGadgetName());
+            //System.out.println("Q is STARTING executing GadgetAvailableEvent of: " + ev.getGadgetName());
             boolean available = inventory.getItem(ev.getGadgetName());
             if (available)
                 this.complete(ev, currTick);
             else
                 this.complete(ev, -1);
-            System.out.println("Q ANSWER for GadgetAvailableEvent of: " + ev.getGadgetName() + " is: " + available + " currtick: " + currTick);
+            //System.out.println("Q ANSWER for GadgetAvailableEvent of: " + ev.getGadgetName() + " is: " + available + " currtick: " + currTick);
         });
     }
 }

@@ -80,8 +80,8 @@ public class MI6Runner {
             try {
                 //System.out.println("terminating: " + t.getName());
                 t.join();
-                if (i < threads.size() - 1)
-                    System.out.println("terminated: " + t.getName() + " NEXT to terminate: " + threads.get(i + 1));
+//                if (i < threads.size() - 1)
+//                    System.out.println("terminated: " + t.getName() + " NEXT to terminate: " + threads.get(i + 1));
             } catch (InterruptedException e) {
             }
         }
