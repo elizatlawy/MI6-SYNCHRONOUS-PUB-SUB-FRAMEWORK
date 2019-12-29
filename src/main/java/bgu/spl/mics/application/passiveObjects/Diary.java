@@ -63,9 +63,9 @@ public class Diary {
     public void printToFile(String filename) {
         // print number of received missions (total field)
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try{
+        try {
             FileWriter writeToFile = new FileWriter(filename);
-            gson.toJson(Diary.getInstance() ,writeToFile);
+            gson.toJson(Diary.getInstance(), writeToFile);
             writeToFile.flush();
             writeToFile.close();
         } catch (IOException e) {
@@ -73,18 +73,19 @@ public class Diary {
         }
     }
 
-	/**
-	 * Gets the total number of received missions (executed / aborted) be all the M-instances.
-	 * @return the total number of received missions (executed / aborted) be all the M-instances.
-	 */
-	public int getTotal(){
-		return total.intValue();
-	}
+    /**
+     * Gets the total number of received missions (executed / aborted) be all the M-instances.
+     *
+     * @return the total number of received missions (executed / aborted) be all the M-instances.
+     */
+    public int getTotal() {
+        return total.intValue();
+    }
 
-	/**
-	 * Increments the total number of received missions by 1
-	 */
-	public void incrementTotal() {
-		total.compareAndSet(total.intValue(),total.intValue()+1);
-	}
+    /**
+     * Increments the total number of received missions by 1
+     */
+    public void incrementTotal() {
+        total.compareAndSet(total.intValue(), total.intValue() + 1);
+    }
 }

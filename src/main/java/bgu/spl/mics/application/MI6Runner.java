@@ -65,7 +65,16 @@ public class MI6Runner {
         }
         Thread timeServiceThread = new Thread(TimeService.getInstance(), TimeService.getInstance().getName());
         timeServiceThread.start();
-
+        try {
+            timeServiceThread.join();
+        } catch (InterruptedException e) {
+        }
+        // after the time is over interrupt all treads
+        for (int i = 0; i < threads.size(); i++) {
+            Thread t = threads.get(i);
+            t.interrupt();
+        }
+        // wait for all treads to close gracefully
         for (int i = 0; i < threads.size(); i++) {
             Thread t = threads.get(i);
             try {

@@ -127,11 +127,11 @@ public abstract class Subscriber extends RunnableSubPub {
     @Override
     public final void run() {
         getSimplePublisher().messageBroker.register(this);
-
         initialize();
-        subscribeBroadcast(TerminateBroadcast.class, (bro) -> terminate());
-
-        //MI6Runner.startCounter.incrementAndGet();//todo: check how!
+        subscribeBroadcast(TerminateBroadcast.class, (bro) -> {
+            Thread.currentThread().interrupt();
+            terminate();
+        });
         while (!terminated) {
             try {
                 Message toDoMessage = getSimplePublisher().messageBroker.awaitMessage(this);

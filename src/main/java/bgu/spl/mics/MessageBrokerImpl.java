@@ -77,7 +77,6 @@ public class MessageBrokerImpl implements MessageBroker {
                 if (subscribersOfCurrBroadcast != null && !subscribersOfCurrBroadcast.isEmpty()) {
                     for (Subscriber currSubscriber : subscribersOfCurrBroadcast)
                         if (currSubscriber != null) {
-                            mapOfToDoMessages.get(currSubscriber).add(b);
                             // if it is a TerminateBroadcast we want to execute it first
                             if (b instanceof TerminateBroadcast) {
                                 mapOfToDoMessages.get(currSubscriber).addFirst(b);

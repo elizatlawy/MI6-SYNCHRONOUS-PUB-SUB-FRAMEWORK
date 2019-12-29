@@ -18,7 +18,7 @@
                         ],
                         "duration": 7,
                         "gadget": "Sky Hook",
-                        "missionName": "Thunderball1",
+                        "name": "Thunderball",
                         "timeExpired": 15,
                         "timeIssued": 3
                     },
@@ -26,7 +26,7 @@
                         "serialAgentsNumbers": ["007"],
                         "duration": 2,
                         "gadget": "Dagger shoe",
-                        "missionName": "From Russia With Love1",
+                        "name": "From Russia With Love",
                         "timeExpired": 8,
                         "timeIssued": 6
                     },
@@ -34,15 +34,15 @@
                         "serialAgentsNumbers": ["007"],
                         "duration": 2,
                         "gadget": "Dagger shoe",
-                        "missionName": "From Russia With Love1",
+                        "name": "From Russia With Love",
                         "timeExpired": 100,
                         "timeIssued": 15
                     },
                     {
                         "serialAgentsNumbers": ["006"],
                         "duration": 2,
-                        "gadget": "X-ray Glasses",
-                        "missionName": "The World Is Not Enough1",
+                        "gadget": "X-ray glasses",
+                        "name": "The World Is Not Enough",
                         "timeExpired": 100,
                         "timeIssued": 16
                     }
@@ -52,38 +52,14 @@
                 "missions": [
                     {
                         "serialAgentsNumbers": [
-                            "006",
-                            "007"
+                            "007",
+                            "006"
                         ],
                         "duration": 7,
                         "gadget": "Sky Hook",
-                        "missionName": "Thunderball2",
+                        "name": "Thunderball",
                         "timeExpired": 15,
                         "timeIssued": 3
-                    },
-                    {
-                        "serialAgentsNumbers": ["007"],
-                        "duration": 2,
-                        "gadget": "Dagger shoe",
-                        "missionName": "From Russia With Love2",
-                        "timeExpired": 8,
-                        "timeIssued": 6
-                    },
-                    {
-                        "serialAgentsNumbers": ["007"],
-                        "duration": 2,
-                        "gadget": "Dagger shoe",
-                        "missionName": "From Russia With Love2",
-                        "timeExpired": 100,
-                        "timeIssued": 15
-                    },
-                    {
-                        "serialAgentsNumbers": ["006"],
-                        "duration": 2,
-                        "gadget": "X-ray Glasses",
-                        "missionName": "The World Is Not Enough2",
-                        "timeExpired": 100,
-                        "timeIssued": 16
                     }
                 ]
             }

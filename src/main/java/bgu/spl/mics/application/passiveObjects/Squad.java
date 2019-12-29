@@ -51,7 +51,6 @@ public class Squad {
             for (String serialNumber : serials) {
                 if (agents.get(serialNumber) != null) {
                     agents.get(serialNumber).release();
-                    System.out.println("###################################### releaseAgents: " + serialNumber);
                 }
             }
         }
@@ -69,7 +68,6 @@ public class Squad {
         }
         for (String serialNumber : serials) {
             agents.get(serialNumber).release();
-            System.out.println("###################################### sendAgents: " + serialNumber);
         }
     }
 

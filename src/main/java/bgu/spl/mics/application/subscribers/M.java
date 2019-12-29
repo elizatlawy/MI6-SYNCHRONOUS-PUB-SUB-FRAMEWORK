@@ -43,9 +43,8 @@ public class M extends Subscriber {
                 Future<Integer> gadgetAvailable = getSimplePublisher().sendEvent(new GadgetAvailableEvent(currMission.getGadget()));
                 qtime = gadgetAvailable.get((currMission.getTimeExpired() - currTick) * 100, TimeUnit.MILLISECONDS);
             }
-            // todo THIS IS A PATCH THAT FIX THE DEADLOCK - WHY?
-            else
-                getSimplePublisher().sendEvent(new ReleaseAgentEvent(currMission.getSerialAgentsNumbers()));
+//            else
+//                getSimplePublisher().sendEvent(new ReleaseAgentEvent(currMission.getSerialAgentsNumbers()));
             // check if can execute mission
             if ((moneypennyID != null & qtime != null) && ((moneypennyID > 0) & qtime > 0) && (qtime < currMission.getTimeExpired())) {
                 agentsNamesFuture = getSimplePublisher().sendEvent(new GetAgentsNamesEvent(currMission.getSerialAgentsNumbers()));
@@ -66,7 +65,6 @@ public class M extends Subscriber {
                 }
             }
             // time is expired -> Mission abort
-
             else {
                 System.out.println("M No:" + id + " is FINISHED executing MissionReceivedEvent of: " + currMission.getMissionName() + ": MISSION FAILED");
                 getSimplePublisher().sendEvent(new ReleaseAgentEvent(currMission.getSerialAgentsNumbers()));

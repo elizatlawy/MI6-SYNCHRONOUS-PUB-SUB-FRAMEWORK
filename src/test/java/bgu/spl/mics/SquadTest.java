@@ -25,19 +25,6 @@ SquadTest {
     public void setUp(){
         squad = Squad.getInstance();
     }
-//    @AfterEach
-////    public void tearDown() throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException, InvocationTargetException, InstantiationException {
-////        Field instance = Squad.SquadHolder.class.getDeclaredField("instance");
-////        instance.setAccessible(true);
-////        instance.set(null, null);
-////
-//////        Class SquadClass = Class.forName("bgu.spl.mics.application.passiveObjects.Squad.SquadHolder");
-//////        Field instanceFiled = SquadClass.getDeclaredField("instance");
-//////        instanceFiled.setAccessible(true);
-//////        Constructor InvConstructor = SquadClass.getDeclaredConstructors()[0];
-//////        InvConstructor.setAccessible(true);
-//////        instanceFiled.set(instanceFiled, InvConstructor.newInstance());
-//    }
 
     @Test
     void getInstanceTest() {
@@ -46,7 +33,7 @@ SquadTest {
 
         assertTrue(squad1 instanceof Squad);
 
-        Object squad2 = Inventory.getInstance();
+        Object squad2 = Squad.getInstance();
         assertEquals(squad1, squad2);
     }
 
@@ -60,8 +47,8 @@ SquadTest {
         serials.add("007");
         serials.add("006");
         List<String> RetrivesAgentsName = squad.getAgentsNames(serials);
-        assertTrue(RetrivesAgentsName.contains("007"));
-        assertTrue(RetrivesAgentsName.contains("006"));
+        assertTrue(RetrivesAgentsName.contains("Eli"));
+        assertTrue(RetrivesAgentsName.contains("Bond"));
     }
 
     @Test
@@ -96,7 +83,8 @@ SquadTest {
         serials1.add("006");
         assertTrue(squad.getAgents(serials1));
         List<String> serials2 = new LinkedList<>();
-        serials1.add("004");
+        serials2.add("004");
+        serials2.add("005");
         assertFalse (squad.getAgents(serials2));
         assertFalse(agent1.isAvailable());
         assertFalse(agent2.isAvailable());

@@ -10,7 +10,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-
 /**
  * That's where Q holds his gadget (e.g. an explosive pen was used in GoldenEye, a geiger counter in Dr. No, etc).
  * <p>
@@ -75,25 +74,13 @@ public class Inventory {
      */
     public void printToFile(String filename) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-       try{
-           FileWriter writeToFile = new FileWriter(filename);
-           gson.toJson(gadgets,writeToFile);
-           writeToFile.flush();
-           writeToFile.close();
-       } catch (IOException e) {
-           System.out.println("File problem is " + e.getMessage());
-       }
-
-
-    }
-
-    @Override
-    public String toString() {
-        String output = "[";
-        for (String currGadget : gadgets)
-            output = output + "\"" + currGadget + "\"" + ",";
-        output = output.substring(0, output.length() - 1) + "]";
-        return output;
-
+        try {
+            FileWriter writeToFile = new FileWriter(filename);
+            gson.toJson(gadgets, writeToFile);
+            writeToFile.flush();
+            writeToFile.close();
+        } catch (IOException e) {
+            System.out.println("File problem is " + e.getMessage());
+        }
     }
 }

@@ -36,6 +36,7 @@ public class Future<T> {
                 try {
                     this.wait();
                 } catch (InterruptedException e) {
+                    return null;
                 }
             }
         }
@@ -80,6 +81,7 @@ public class Future<T> {
                 try {
                     this.wait(TimeUnit.MILLISECONDS.convert(timeout, unit));
                 } catch (InterruptedException e) {
+                    return null;
                 }
             }
             if (!isDone())

@@ -35,9 +35,7 @@ public class Intelligence extends Subscriber {
             }
         }); // end of lambda
     }
-
     public void load(List<MissionInfo> missionsToLoad) {
         this.missions.addAll(missionsToLoad);
     }
-
 }

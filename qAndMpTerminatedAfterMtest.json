@@ -9,7 +9,7 @@
   ],
   "services": {
     "M": 6,
-    "Moneypenny": 2,
+    "Moneypenny": 5,
     "intelligence": [
       {
         "missions": [
@@ -90,7 +90,7 @@
         ]
       }
     ],
-    "time": 30
+    "time": 40
   },
   "squad": [
     {
